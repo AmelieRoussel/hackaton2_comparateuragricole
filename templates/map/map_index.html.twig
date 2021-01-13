@@ -67,7 +67,17 @@
             infopos += "Longitude: "+position.coords.longitude+"\n";
             document.getElementById("position").innerHTML = infopos;
 
-            let roger = L.marker([position.coords.latitude, position.coords.longitude])
+            let userIcon = L.icon({
+                iconUrl: '{{ asset('build/images/marker/geolocation.png') }}',
+                //shadowUrl: '{{ asset('build/images/marker/geolocation.png') }}',
+                iconSize:     [41, 41],
+                //shadowSize:   [50, 64],
+                iconAnchor:   [20, 41],
+                //shadowAnchor: [32, 64],
+                popupAnchor:  [0, -40]
+            });
+
+            let roger = L.marker([position.coords.latitude, position.coords.longitude], {icon: userIcon})
                 .addTo(map);
             roger.bindPopup("<p>Vous êtes ici</p>");
         }
@@ -76,10 +86,21 @@
             navigator.geolocation.getCurrentPosition(geolocation);
 
         let coordinates = [];
+
+        let farmerIcon = L.icon({
+            iconUrl: '{{ asset('build/images/marker/farmer.png') }}',
+            //shadowUrl: '{{ asset('build/images/marker/farmer.png') }}',
+            iconSize:     [41, 41],
+            //shadowSize:   [50, 64],
+            iconAnchor:   [20, 41],
+            //shadowAnchor: [32, 64],
+            popupAnchor:  [0, -40]
+        });
+
         {% for farmer in farmers %}
             coordinates = [{{ farmer.city.latitude }}, {{ farmer.city.longitude }}];
             if (typeof city{{ farmer.city.zipcode }} == 'undefined') {
-                let city{{ farmer.city.zipcode }} = L.marker(coordinates)
+                let city{{ farmer.city.zipcode }} = L.marker(coordinates, {icon: farmerIcon})
                     .addTo(map);
                 city{{ farmer.city.zipcode }}.bindPopup(
                     "<p>Chez {{ farmer.firstname }} {{ farmer.lastname }} </p>");
