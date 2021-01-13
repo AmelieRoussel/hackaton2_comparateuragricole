@@ -28,7 +28,10 @@
         {{ 'Sauvegarder'|trans }}</button>
         {{ form_end(formComment) }}
     </div>
+
     {% endif %}
+    
+    <div id="position"></div>
 
         <div id="map" class="map"></div>
     </section>
@@ -52,7 +55,25 @@
         window.onload = function () {
             initMap();
         };
+        
+        let marker = L.marker([47.878264, 1.9258559])
+            .addTo(map);
+        marker.bindPopup("<p>Chez Jean michel </p>")</script>
 
+    <script>
+        function geolocation(position) {
+            let infopos = "Position :\n";
+            infopos += "Latitude : "+position.coords.latitude +"\n";
+            infopos += "Longitude: "+position.coords.longitude+"\n";
+            document.getElementById("position").innerHTML = infopos;
+
+            let roger = L.marker([position.coords.latitude, position.coords.longitude])
+                .addTo(map);
+            roger.bindPopup("<p>Vous êtes ici</p>");
+        }
+
+        if(navigator.geolocation)
+            navigator.geolocation.getCurrentPosition(geolocation);
 
         let coordinates = [];
         {% for farmer in farmers %}
