@@ -4,6 +4,8 @@
 namespace App\Controller;
 
 
+
+use App\Repository\CityRepository;
 use App\Entity\Comment;
 use App\Form\CommentType;
 use App\Repository\FarmerRepository;
@@ -41,8 +43,7 @@ class MapController extends AbstractController
 
         return $this->render('map/map_index.html.twig', [
             'formComment' => $form->createView(),
-            'farmers' => $farmerRepository->findBy([], [], 10)
+            'farmers' => $farmerRepository->findBy([], [], 10),
         ]);
     }
-
 }
