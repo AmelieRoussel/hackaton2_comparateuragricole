@@ -1,4 +1,5 @@
 {% extends 'base.html.twig' %}
+{% form_theme formComment 'bootstrap_4_layout.html.twig' %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -9,15 +10,31 @@
 {% endblock %}
 
 {% block body %}
-    <section class="container">
-        <h1>La carte des agriculteurs du monde</h1>
+    <section>
+        <h1 class="text-center">La carte des agriculteurs du monde</h1>
 
-    </section>
-
-    <div id="map" class="map">
-
+    {% if app.user %}
+    <div class="text-dark mb-5">
+        {{ form_start(formComment) }}
+        <div class="my-3">
+            {{ form_label(formComment.commentText, 'Votre commentaire :') }}
+            {{ form_widget(formComment.commentText) }}
+        </div>
+        <div class="my-3">
+            {{ form_label(formComment.rate, 'Votre note :') }}
+            {{ form_widget(formComment.rate) }}
+        </div>
+        <button class="btn btn-primary my-3">
+        {{ 'Sauvegarder'|trans }}</button>
+        {{ form_end(formComment) }}
     </div>
+
+    {% endif %}
+    
     <div id="position"></div>
+
+        <div id="map" class="map"></div>
+    </section>
 {% endblock %}
 
 {% block javascripts %}
@@ -25,12 +42,12 @@
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
             integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
             crossorigin=""></script>
-    <script> let map = L.map('map').setView([47.878264, 1.9258559], 13);
+    <script> let map = L.map('map').setView([49.157376, 0.47716], 13);
 
         function initMap() {
             L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
                 attribution: 'données © <a href="//osm.org/copyright">OpenStreetMap</a>/ODbL - rendu <a href="//openstreetmap.fr">OSM France</a>',
-                minZoom: 5,
+                minZoom: 1,
                 maxZoom: 18
             }).addTo(map);
         }
@@ -38,6 +55,7 @@
         window.onload = function () {
             initMap();
         };
+        
         let marker = L.marker([47.878264, 1.9258559])
             .addTo(map);
         marker.bindPopup("<p>Chez Jean michel </p>")</script>
@@ -56,5 +74,16 @@
 
         if(navigator.geolocation)
             navigator.geolocation.getCurrentPosition(geolocation);
+
+        let coordinates = [];
+        {% for farmer in farmers %}
+            coordinates = [{{ farmer.city.latitude }}, {{ farmer.city.longitude }}];
+            if (typeof city{{ farmer.city.zipcode }} == 'undefined') {
+                let city{{ farmer.city.zipcode }} = L.marker(coordinates)
+                    .addTo(map);
+                city{{ farmer.city.zipcode }}.bindPopup(
+                    "<p>Chez {{ farmer.firstname }} {{ farmer.lastname }} </p>");
+            }
+        {% endfor %}
     </script>
 {% endblock %}
