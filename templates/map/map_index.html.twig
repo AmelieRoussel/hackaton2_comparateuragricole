@@ -33,21 +33,22 @@
     {% endif %}
         <hr>
     <h2 class="text-center my-5"> Les commentaires :</h2>
-        <div class="row d-flex justify-content-around my-5">
+        <div class="row d-flex justify-content-center my-5">
             {% for comment in comments %}
-                <div class="d-flex flex-column col-12 col-sm-5 col-lg-3 border border-2 border-primary rounded p-2">
+                <div class="comment d-flex flex-column col-12 col-sm-5 col-lg-3 p-2 m-2">
                     <p class="mb-0">De : <strong>{{ comment.author.firstname }} {{ comment.author.lastname }}</strong></p>
-                    <p class="mb-0">Note : <span class="text-primary"><strong>{{ comment.rate }}</strong> </span></p>
+                    <p class="mb-0">Note :
+                        {% for i in 1..comment.rate %}
+                                <img src="{{ asset('build/images/star.svg') }}" class="stars-rate" alt="">
+                        {% endfor %}
+                        </p>
                     <p class="mb-0">Commentaire : {{ comment.commentText }}</p>
                 </div>
             {% endfor %}
         </div>
     </section>
 
-
-
-    <div id="map" class="map">
-
+    <div id="map" class="map text-dark">
     </div>
 {% endblock %}
 
