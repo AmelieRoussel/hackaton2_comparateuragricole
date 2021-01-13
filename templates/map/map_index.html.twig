@@ -13,6 +13,7 @@
         <h1 class="text-center my-5">La carte des agriculteurs du monde</h1>
         <hr>
         <h2 class="text-center my-5">Ecrivez votre commentaire :</h2>
+
     {% if app.user %}
     <div class="text-dark mb-5">
         {{ form_start(formComment) }}
@@ -48,8 +49,10 @@
         </div>
     </section>
 
-    <div id="map" class="map text-dark">
-    </div>
+    <div id="position"></div>
+
+        <div id="map" class="map"></div>
+    </section>
 {% endblock %}
 
 {% block javascripts %}
@@ -57,7 +60,7 @@
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
             integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
             crossorigin=""></script>
-    <script> let map = L.map('map').setView([47.878264, 1.9258559], 13);
+    <script> let map = L.map('map').setView([49.157376, 0.47716], 13);
 
         function initMap() {
             L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
@@ -70,15 +73,35 @@
         window.onload = function () {
             initMap();
         };
-
+        
         let marker = L.marker([47.878264, 1.9258559])
             .addTo(map);
-        marker.bindPopup("<p>Chez Jean michel </p>")
+        marker.bindPopup("<p>Chez Jean michel </p>")</script>
 
-        let CHARTRES = L.marker([48.45, 1.5])
-            .addTo(map);
-        CHARTRES.bindPopup("<p>Chez Jacqui Michel </p>")
+    <script>
+        function geolocation(position) {
+            let infopos = "Position :\n";
+            infopos += "Latitude : "+position.coords.latitude +"\n";
+            infopos += "Longitude: "+position.coords.longitude+"\n";
+            document.getElementById("position").innerHTML = infopos;
 
+            let roger = L.marker([position.coords.latitude, position.coords.longitude])
+                .addTo(map);
+            roger.bindPopup("<p>Vous êtes ici</p>");
+        }
 
+        if(navigator.geolocation)
+            navigator.geolocation.getCurrentPosition(geolocation);
+
+        let coordinates = [];
+        {% for farmer in farmers %}
+            coordinates = [{{ farmer.city.latitude }}, {{ farmer.city.longitude }}];
+            if (typeof city{{ farmer.city.zipcode }} == 'undefined') {
+                let city{{ farmer.city.zipcode }} = L.marker(coordinates)
+                    .addTo(map);
+                city{{ farmer.city.zipcode }}.bindPopup(
+                    "<p>Chez {{ farmer.firstname }} {{ farmer.lastname }} </p>");
+            }
+        {% endfor %}
     </script>
 {% endblock %}

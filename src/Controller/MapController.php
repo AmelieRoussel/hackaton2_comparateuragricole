@@ -4,6 +4,8 @@
 namespace App\Controller;
 
 
+
+use App\Repository\CityRepository;
 use App\Entity\Comment;
 use App\Form\CommentType;
 use App\Repository\CommentRepository;
@@ -48,5 +50,4 @@ class MapController extends AbstractController
             'farmers' => $farmerRepository->findBy([], [], 10)
         ]);
     }
-
 }
