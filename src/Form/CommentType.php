@@ -17,7 +17,7 @@ class CommentType extends AbstractType
             ->add('commentText',TextType::class)
             ->add('rate', ChoiceType::class, [
                 'choices' => [
-                    1 => 1,
+                    50 => 1,
                     2 => 2,
                     3 => 3,
                     4 => 4,
