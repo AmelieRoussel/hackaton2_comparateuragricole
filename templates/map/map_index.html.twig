@@ -11,7 +11,6 @@
 {% block body %}
     <section class="container">
         <h1>La carte des agriculteurs du monde</h1>
-
     </section>
 
     <div id="map" class="map">
@@ -29,7 +28,7 @@
         function initMap() {
             L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
                 attribution: 'données © <a href="//osm.org/copyright">OpenStreetMap</a>/ODbL - rendu <a href="//openstreetmap.fr">OSM France</a>',
-                minZoom: 5,
+                minZoom: 1,
                 maxZoom: 18
             }).addTo(map);
         }
@@ -37,7 +36,22 @@
         window.onload = function () {
             initMap();
         };
+
+        {% for farmer in farmers %}
+            let {{ farmer.city.city }} = L.marker([ undefined{{ farmer.city.latitude }}, {{ farmer.city.longitude }} ])
+                .addTo(map);
+            {{ farmer.city.city }}.bindPopup("<p>Chez {{ farmer.firstname }} {{ farmer.lastname}} </p>")
+        {% endfor %}
+
+
         let marker = L.marker([47.878264, 1.9258559])
             .addTo(map);
-        marker.bindPopup("<p>Chez Jean michel </p>")</script>
+        marker.bindPopup("<p>Chez Jean michel </p>")
+
+        let CHARTRES = L.marker([48.45, 1.5])
+            .addTo(map);
+        CHARTRES.bindPopup("<p>Chez Jacqui Michel </p>")
+
+
+    </script>
 {% endblock %}
