@@ -17,6 +17,7 @@
     <div id="map" class="map">
 
     </div>
+    <div id="position"></div>
 {% endblock %}
 
 {% block javascripts %}
@@ -40,4 +41,20 @@
         let marker = L.marker([47.878264, 1.9258559])
             .addTo(map);
         marker.bindPopup("<p>Chez Jean michel </p>")</script>
+
+    <script>
+        function geolocation(position) {
+            let infopos = "Position :\n";
+            infopos += "Latitude : "+position.coords.latitude +"\n";
+            infopos += "Longitude: "+position.coords.longitude+"\n";
+            document.getElementById("position").innerHTML = infopos;
+
+            let roger = L.marker([position.coords.latitude, position.coords.longitude])
+                .addTo(map);
+            roger.bindPopup("<p>Vous êtes ici</p>");
+        }
+
+        if(navigator.geolocation)
+            navigator.geolocation.getCurrentPosition(geolocation);
+    </script>
 {% endblock %}
