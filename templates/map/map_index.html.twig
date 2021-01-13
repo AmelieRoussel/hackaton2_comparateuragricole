@@ -9,13 +9,11 @@
 {% endblock %}
 
 {% block body %}
-    <section class="container">
-        <h1>La carte des agriculteurs du monde</h1>
+    <section>
+        <h1 class="text-center">La carte des agriculteurs du monde</h1>
+
+        <div id="map" class="map"></div>
     </section>
-
-    <div id="map" class="map">
-
-    </div>
 {% endblock %}
 
 {% block javascripts %}
@@ -23,7 +21,7 @@
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
             integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
             crossorigin=""></script>
-    <script> let map = L.map('map').setView([47.878264, 1.9258559], 13);
+    <script> let map = L.map('map').setView([49.157376, 0.47716], 13);
 
         function initMap() {
             L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
@@ -37,21 +35,15 @@
             initMap();
         };
 
+        let coordinates = [];
         {% for farmer in farmers %}
-            let {{ farmer.city.city }} = L.marker([ undefined{{ farmer.city.latitude }}, {{ farmer.city.longitude }} ])
-                .addTo(map);
-            {{ farmer.city.city }}.bindPopup("<p>Chez {{ farmer.firstname }} {{ farmer.lastname}} </p>")
+            coordinates = [{{ farmer.city.latitude }}, {{ farmer.city.longitude }}];
+            if (typeof city{{ farmer.city.zipcode }} == 'undefined') {
+                let city{{ farmer.city.zipcode }} = L.marker(coordinates)
+                    .addTo(map);
+                city{{ farmer.city.zipcode }}.bindPopup(
+                    "<p>Chez {{ farmer.firstname }} {{ farmer.lastname }} </p>");
+            }
         {% endfor %}
-
-
-        let marker = L.marker([47.878264, 1.9258559])
-            .addTo(map);
-        marker.bindPopup("<p>Chez Jean michel </p>")
-
-        let CHARTRES = L.marker([48.45, 1.5])
-            .addTo(map);
-        CHARTRES.bindPopup("<p>Chez Jacqui Michel </p>")
-
-
     </script>
 {% endblock %}

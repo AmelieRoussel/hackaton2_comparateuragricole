@@ -4,6 +4,7 @@
 namespace App\Controller;
 
 
+use App\Repository\CityRepository;
 use App\Repository\FarmerRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,10 +17,11 @@ class MapController extends AbstractController
      * @param FarmerRepository $farmerRepository
      * @return Response
      */
-    public function index(FarmerRepository $farmerRepository): Response
+    public function index(FarmerRepository $farmerRepository, CityRepository $cityRepository): Response
     {
         return $this->render('map/map_index.html.twig', [
-            'farmers' => $farmerRepository->findBy([], [], 10)
+            'farmers' => $farmerRepository->findBy([], [], 300),
+            'cities' => $cityRepository->findBy([],[],300),
         ]);
     }
 }
