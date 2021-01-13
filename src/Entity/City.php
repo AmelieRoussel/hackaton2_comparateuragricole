@@ -118,7 +118,7 @@ class City
         return $this->inseeCode;
     }
 
-    public function setInseeCode(int $inseeCode): self
+    public function setInseeCode( $inseeCode): self
     {
         $this->inseeCode = $inseeCode;
 
