@@ -1,4 +1,5 @@
 {% extends 'base.html.twig' %}
+{% form_theme formComment 'bootstrap_4_layout.html.twig' %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -9,9 +10,28 @@
 {% endblock %}
 
 {% block body %}
-    <section class="container">
+    <section class="container my-5">
         <h1>La carte des agriculteurs du monde</h1>
+
+    {% if app.user %}
+    <div class="text-dark mb-5">
+        {{ form_start(formComment) }}
+        <div class="my-3">
+            {{ form_label(formComment.commentText, 'Votre commentaire :') }}
+            {{ form_widget(formComment.commentText) }}
+        </div>
+        <div class="my-3">
+            {{ form_label(formComment.rate, 'Votre note :') }}
+            {{ form_widget(formComment.rate) }}
+        </div>
+        <button class="btn btn-primary my-3">
+        {{ 'Sauvegarder'|trans }}</button>
+        {{ form_end(formComment) }}
+    </div>
+    {% endif %}
     </section>
+
+
 
     <div id="map" class="map">
 
@@ -36,13 +56,6 @@
         window.onload = function () {
             initMap();
         };
-
-        {% for farmer in farmers %}
-            let {{ farmer.city.city }} = L.marker([ undefined{{ farmer.city.latitude }}, {{ farmer.city.longitude }} ])
-                .addTo(map);
-            {{ farmer.city.city }}.bindPopup("<p>Chez {{ farmer.firstname }} {{ farmer.lastname}} </p>")
-        {% endfor %}
-
 
         let marker = L.marker([47.878264, 1.9258559])
             .addTo(map);
