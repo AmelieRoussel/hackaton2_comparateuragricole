@@ -9,49 +9,56 @@
 {% endblock %}
 
 {% block body %}
-    <section class="container">
+    <section>
         <h1 class="text-center my-5">La carte des agriculteurs du monde</h1>
         <hr>
-        <h2 class="text-center my-5">Ecrivez votre commentaire :</h2>
 
-    {% if app.user %}
-    <div class="text-dark mb-5">
-        {{ form_start(formComment) }}
-        <div class="my-3">
-            {{ form_label(formComment.commentText, 'Votre commentaire :') }}
-            {{ form_widget(formComment.commentText) }}
-        </div>
-        <div class="my-3">
-            {{ form_label(formComment.rate, 'Votre note :') }}
-            {{ form_widget(formComment.rate) }}
-        </div>
-        <button class="btn btn-primary mt-3">
-        {{ 'Sauvegarder'|trans }}</button>
-        {{ form_end(formComment) }}
-    </div>
-    {% else %}
-        <a href="{{ path('app_login') }}" class="btn btn-primary">Se connecter</a>
-    {% endif %}
-        <hr>
-    <h2 class="text-center my-5"> Les commentaires :</h2>
-        <div class="row d-flex justify-content-center my-5">
-            {% for comment in comments %}
-                <div class="comment d-flex flex-column col-12 col-sm-5 col-lg-3 p-2 m-2">
-                    <p class="mb-0">De : <strong>{{ comment.author.firstname }} {{ comment.author.lastname }}</strong></p>
-                    <p class="mb-0">Note :
-                        {% for i in 1..comment.rate %}
-                                <img src="{{ asset('build/images/star.svg') }}" class="stars-rate" alt="">
-                        {% endfor %}
-                        </p>
-                    <p class="mb-0">Commentaire : {{ comment.commentText }}</p>
-                </div>
-            {% endfor %}
-        </div>
-
-    <div id="position"></div>
+        <div id="position"></div>
 
         <div id="map" class="map"></div>
+
+        <hr>
+
+        <h2 class="text-center my-5">Ecrivez votre commentaire :</h2>
+
+        {% if app.user %}
+        <div class="container">
+            <div class="text-dark mb-5">
+                {{ form_start(formComment) }}
+                <div class="my-3">
+                    {{ form_label(formComment.commentText, 'Votre commentaire :') }}
+                    {{ form_widget(formComment.commentText) }}
+                </div>
+                <div class="my-3">
+                    {{ form_label(formComment.rate, 'Votre note :') }}
+                    {{ form_widget(formComment.rate) }}
+                </div>
+                <button class="btn btn-primary mt-3">
+                    {{ 'Sauvegarder'|trans }}</button>
+                {{ form_end(formComment) }}
+            </div>
+            {% else %}
+                <a href="{{ path('app_login') }}" class="btn btn-primary">Se connecter</a>
+            {% endif %}
+            <hr>
+            <h2 class="text-center my-5"> Les commentaires :</h2>
+            <div class="row d-flex justify-content-center my-5">
+                {% for comment in comments %}
+                    <div class="comment d-flex flex-column col-12 col-sm-5 col-lg-3 p-2 m-2">
+                        <p class="mb-0">De :
+                            <strong>{{ comment.author.firstname }} {{ comment.author.lastname }}</strong></p>
+                        <p class="mb-0">Note :
+                            {% for i in 1..comment.rate %}
+                                <img src="{{ asset('build/images/star.svg') }}" class="stars-rate" alt="">
+                            {% endfor %}
+                        </p>
+                        <p class="mb-0">Commentaire : {{ comment.commentText }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
     </section>
+
 {% endblock %}
 
 {% block javascripts %}
@@ -72,7 +79,7 @@
         window.onload = function () {
             initMap();
         };
-        
+
         let marker = L.marker([47.878264, 1.9258559])
             .addTo(map);
         marker.bindPopup("<p>Chez Jean michel </p>")</script>
@@ -80,24 +87,25 @@
     <script>
         function geolocation(position) {
             let infopos = "Position :\n";
-            infopos += "Latitude : "+position.coords.latitude +"\n";
-            infopos += "Longitude: "+position.coords.longitude+"\n";
+            infopos += "Latitude : " + position.coords.latitude + "\n";
+            infopos += "Longitude: " + position.coords.longitude + "\n";
             document.getElementById("position").innerHTML = infopos;
 
             let userIcon = L.icon({
                 iconUrl: '{{ asset('build/images/marker/geolocation.png') }}',
                 //shadowUrl: '{{ asset('build/images/marker/geolocation.png') }}',
-                iconSize:     [41, 41],
+                iconSize: [41, 41],
                 //shadowSize:   [50, 64],
-                iconAnchor:   [20, 41],
+                iconAnchor: [20, 41],
                 //shadowAnchor: [32, 64],
-                popupAnchor:  [0, -40]
+                popupAnchor: [0, -40]
             });
 
             let roger = L.marker([position.coords.latitude, position.coords.longitude], {icon: userIcon})
                 .addTo(map);
             roger.bindPopup("<p>Vous êtes ici</p>");
         }
+
 
         if(navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(geolocation);
@@ -107,33 +115,29 @@
         let farmerIcon = L.icon({
             iconUrl: '{{ asset('build/images/marker/farmer.png') }}',
             //shadowUrl: '{{ asset('build/images/marker/farmer.png') }}',
-            iconSize:     [41, 41],
+            iconSize: [41, 41],
             //shadowSize:   [50, 64],
-            iconAnchor:   [20, 41],
+            iconAnchor: [20, 41],
             //shadowAnchor: [32, 64],
-            popupAnchor:  [0, -40]
+            popupAnchor: [0, -40]
         });
-        
+
         let coordinates = [];
         let categories = [];
         let category = '';
         {% for farmer in farmers %}
         categories = [];
         coordinates = [{{ farmer.city.latitude }}, {{ farmer.city.longitude }}];
-        if (typeof city{{ farmer.city.zipcode }} == 'undefined') {
-            let city{{ farmer.city.zipcode }} = L.marker(coordinates, {icon: farmerIcon})
+        if (typeof {{ farmer.city.slug }} == 'undefined') {
+            let {{ farmer.city.slug }} = L.marker(coordinates, {icon: farmerIcon})
                 .addTo(map);
 
             {% for city in cities %}
-                {% if city.zipcode == farmer.city.zipcode %}
-                    {#let city{{ city.zipcode }} = {{ city.farmers }};#}
-                    {#let city{{ city.zipcode }}sum = city{{ city.zipcode }}.length;#}
+                {% if city.slug == farmer.city.slug %}
                     {% for farmer in city.farmers %}
                         {% for transaction in farmer.transactions %}
-                            if (typeof {{ transaction.product.category.name ~ city.zipcode }} == 'undefined') {
-                                let {{ transaction.product.category.name ~ city.zipcode}} = "{{ transaction.product.category.name }}";
+                            if (categories.indexOf('{{ transaction.product.category.name }}') === -1)
                                 categories.push("{{ transaction.product.category.name }}");
-                            }
                         {% endfor %}
                     {% endfor %}
                 {% endif %}
@@ -141,10 +145,10 @@
 
             category = categories.join(', ');
 
-            city{{ farmer.city.zipcode }}.bindPopup(
-                {#"<p>Nombre d'agriculteurs : " +#}
-                {#    {% for city in cities %} city{{ city.zipcode }}sum {% endfor %} + "</p>" +#}
-                '<p> Catégories : ' + category + "</p>"
+            {{ farmer.city.slug }}.bindPopup(
+                    {# "<p>Nombre d'agriculteurs : " + #}
+                    {# {% for city in cities %} city{{ city.zipcode }}sum {% endfor %} + "</p>" + #}
+                "<p> Céréales vendues : " + category + "</p>"
             );
         }
         {% endfor %}
