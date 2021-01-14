@@ -1,81 +1,91 @@
-<div id="mySidebar" class="sidebar">
-    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-    <div class="accordion" id="accordionExample">
+
+<nav class="navbar navbar-light navbar-hight" style="background-color: #5a9449;">
+    <a class="navbar-brand text-white" href="#">
+        <img src="{{ asset('build/images/logo.jpeg') }}" width="40" height="40" class="d-inline-block align-top" alt="" loading="lazy">
+        ComparateurAgricole.com
+    </a>
+    <span class="h2 d-flex justify-content-center">La Carte des Agriculteurs</span>
+</nav>
+<nav class="navbar navbar-light navbar-down" style="background-color: #346F32;">
+    <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+        <div class="accordion" id="accordionExample">
+            <div class="card">
+                <div class="card-header" id="headingOne">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                                data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            Filtrer par emplacement
+                        </button>
+                    </h2>
+                </div>
+
+                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                    <div class="card-body">
+                        {{ form_start(formCity) }}
+                        {{ form_widget(formCity) }}
+                        <button class="btn-form-city btn btn-primary p-0 align-items-center">
+                            <img class="img-form-city" src="{{ asset('build/images/loupe.svg') }}">
+                        </button>
+                        {{ form_end(formCity) }}
+                    </div>
+                    <div class="card-body">
+                        {{ form_start(formDepartment) }}
+                        {{ form_widget(formDepartment) }}
+                        <button class="btn-form-city btn btn-primary p-0 align-items-center">
+                            <img class="img-form-city" src="{{ asset('build/images/loupe.svg') }}">
+                        </button>
+                        {{ form_end(formDepartment) }}
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="card">
-            <div class="card-header" id="headingOne">
+            <div class="card-header" id="headingTwo">
                 <h2 class="mb-0">
-                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
-                            data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        Filtrer par emplacement
+                    <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
+                            data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        Filtrer par ressources
                     </button>
                 </h2>
             </div>
-
-            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
                 <div class="card-body">
-                    {{ form_start(formCity) }}
-                    {{ form_widget(formCity) }}
+                    {{ form_start(formByProduct) }}
+                    {{ form_widget(formByProduct) }}
                     <button class="btn-form-city btn btn-primary p-0 align-items-center">
                         <img class="img-form-city" src="{{ asset('build/images/loupe.svg') }}">
                     </button>
-                    {{ form_end(formCity) }}
+                    {{ form_end(formByProduct) }}
                 </div>
-                <div class="card-body">
-                    {{ form_start(formDepartment) }}
-                    {{ form_widget(formDepartment) }}
-                    <button class="btn-form-city btn btn-primary p-0 align-items-center">
-                        <img class="img-form-city" src="{{ asset('build/images/loupe.svg') }}">
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="headingThree">
+                <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
+                            data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        Filtrer par prix
                     </button>
-                    {{ form_end(formDepartment) }}
+                </h2>
+            </div>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                <div class="card-body">
+                    <div class="row">
+                        <input type="checkbox" id="scales" name="scales"
+                               checked>
+                        <label for="scales">Du plus cher au moins cher</label>
+                    </div>
+                    <div class="row">
+                        <input type="checkbox" id="horns" name="horns">
+                        <label for="horns">Du moins cher au plus cher</label>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="card">
-        <div class="card-header" id="headingTwo">
-            <h2 class="mb-0">
-                <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
-                        data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                    Filtrer par ressources
-                </button>
-            </h2>
-        </div>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-            <div class="card-body">
-                {{ form_start(formByProduct) }}
-                {{ form_widget(formByProduct) }}
-                <button class="btn-form-city btn btn-primary p-0 align-items-center">
-                    <img class="img-form-city" src="{{ asset('build/images/loupe.svg') }}">
-                </button>
-                {{ form_end(formByProduct) }}
-            </div>
-        </div>
     </div>
-    <div class="card">
-        <div class="card-header" id="headingThree">
-            <h2 class="mb-0">
-                <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
-                        data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                    Filtrer par prix
-                </button>
-            </h2>
-        </div>
-        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-            <div class="card-body">
-                <div class="row">
-                    <input type="checkbox" id="scales" name="scales"
-                           checked>
-                    <label for="scales">Du plus cher au moins cher</label>
-                </div>
-                <div class="row">
-                    <input type="checkbox" id="horns" name="horns">
-                    <label for="horns">Du moins cher au plus cher</label>
-                </div>
-            </div>
-        </div>
+    <div id="main">
+        <button class="openbtn" onclick="openNav()">☰</button>
     </div>
-</div>
-</div>
-<div id="main">
-    <button class="openbtn" onclick="openNav()">☰</button>
-</div>
+</nav>
