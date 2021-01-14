@@ -1,6 +1,7 @@
 @import 'variables.scss';
 @import "~bootstrap/scss/bootstrap";
 
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -8,6 +9,17 @@
 }
 
 .map {
-  width: 500px;
-  height: 500px;
+  width: 99vw;
+  height: 100vh;
 }
+
+.stars-rate {
+  width: 25px;
+  height: 25px;
+}
+
+.comment {
+  border: 5px solid $primary;
+  border-radius: 5px;
+}
+
