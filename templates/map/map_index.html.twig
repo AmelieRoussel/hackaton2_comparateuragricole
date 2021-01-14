@@ -13,27 +13,40 @@
     <section>
         <h1 class="text-center">La carte des agriculteurs du monde</h1>
 
-    {% if app.user %}
-    <div class="text-dark mb-5">
-        {{ form_start(formComment) }}
-        <div class="my-3">
-            {{ form_label(formComment.commentText, 'Votre commentaire :') }}
-            {{ form_widget(formComment.commentText) }}
-        </div>
-        <div class="my-3">
-            {{ form_label(formComment.rate, 'Votre note :') }}
-            {{ form_widget(formComment.rate) }}
-        </div>
-        <button class="btn btn-primary my-3">
-        {{ 'Sauvegarder'|trans }}</button>
-        {{ form_end(formComment) }}
-    </div>
+        {% if app.user %}
+            <div class="text-dark mb-5">
+                {{ form_start(formComment) }}
+                <div class="my-3">
+                    {{ form_label(formComment.commentText, 'Votre commentaire :') }}
+                    {{ form_widget(formComment.commentText) }}
+                </div>
+                <div class="my-3">
+                    {{ form_label(formComment.rate, 'Votre note :') }}
+                    {{ form_widget(formComment.rate) }}
+                </div>
+                <button class="btn btn-primary my-3">
+                    {{ 'Sauvegarder'|trans }}</button>
+                {{ form_end(formComment) }}
+            </div>
 
-    {% endif %}
-    
-    <div id="position"></div>
+        {% endif %}
+
+        <div id="position"></div>
 
         <div id="map" class="map"></div>
+    </section>
+    <section>
+        <h2 class="my-4 mx-4">Découvrir les agriculteurs à proximité</h2>
+        <div class="row mx-0">
+            {% for city in cities %}
+                <div class="col-lg-1 col-sm-4">
+                    <img src="{{ asset('build/images/fields/field.jpg') }}" class="card-img" alt="image champ">
+                    <div class="card-img-overlay ">
+                        <h5 class="card-title text-center text-uppercase">{{ city.city }}</h5>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
     </section>
 {% endblock %}
 
@@ -55,7 +68,7 @@
         window.onload = function () {
             initMap();
         };
-        
+
         let marker = L.marker([47.878264, 1.9258559])
             .addTo(map);
         marker.bindPopup("<p>Chez Jean michel </p>")</script>
@@ -63,8 +76,8 @@
     <script>
         function geolocation(position) {
             let infopos = "Position :\n";
-            infopos += "Latitude : "+position.coords.latitude +"\n";
-            infopos += "Longitude: "+position.coords.longitude+"\n";
+            infopos += "Latitude : " + position.coords.latitude + "\n";
+            infopos += "Longitude: " + position.coords.longitude + "\n";
             document.getElementById("position").innerHTML = infopos;
 
             let roger = L.marker([position.coords.latitude, position.coords.longitude])
@@ -72,18 +85,18 @@
             roger.bindPopup("<p>Vous êtes ici</p>");
         }
 
-        if(navigator.geolocation)
+        if (navigator.geolocation)
             navigator.geolocation.getCurrentPosition(geolocation);
 
         let coordinates = [];
         {% for farmer in farmers %}
-            coordinates = [{{ farmer.city.latitude }}, {{ farmer.city.longitude }}];
-            if (typeof city{{ farmer.city.zipcode }} == 'undefined') {
-                let city{{ farmer.city.zipcode }} = L.marker(coordinates)
-                    .addTo(map);
-                city{{ farmer.city.zipcode }}.bindPopup(
-                    "<p>Chez {{ farmer.firstname }} {{ farmer.lastname }} </p>");
-            }
+        coordinates = [{{ farmer.city.latitude }}, {{ farmer.city.longitude }}];
+        if (typeof city{{ farmer.city.zipcode }} == 'undefined') {
+            let city{{ farmer.city.zipcode }} = L.marker(coordinates)
+                .addTo(map);
+            city{{ farmer.city.zipcode }}.bindPopup(
+                "<p>Chez {{ farmer.firstname }} {{ farmer.lastname }} </p>");
+        }
         {% endfor %}
     </script>
 {% endblock %}

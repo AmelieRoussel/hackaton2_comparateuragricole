@@ -5,6 +5,7 @@ namespace App\Controller;
 
 
 
+use App\Entity\City;
 use App\Repository\CityRepository;
 use App\Entity\Comment;
 use App\Form\CommentType;
@@ -21,11 +22,13 @@ class MapController extends AbstractController
      * @Route("/", name="map")
      * @param FarmerRepository $farmerRepository
      * @param Request $request
+     * @param CityRepository $cityRepository
      * @return Response
      */
     public function index(FarmerRepository $farmerRepository,
-                          Request $request): Response
-    {
+                          Request $request,
+                          CityRepository $cityRepository
+    ): Response {
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
@@ -44,6 +47,7 @@ class MapController extends AbstractController
         return $this->render('map/map_index.html.twig', [
             'formComment' => $form->createView(),
             'farmers' => $farmerRepository->findBy([], [], 10),
+            'cities' => $cityRepository->findBy([], [], 3),
         ]);
     }
 }
