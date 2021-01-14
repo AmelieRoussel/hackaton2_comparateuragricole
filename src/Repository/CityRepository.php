@@ -23,6 +23,7 @@ class CityRepository extends ServiceEntityRepository
 {
     return $this->createQueryBuilder('city')
         ->join('city.farmers', 'farmers')
+        ->setMaxResults(20)
         ->getQuery()
         ->execute();
 }
