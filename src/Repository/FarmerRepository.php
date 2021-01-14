@@ -19,13 +19,12 @@ class FarmerRepository extends ServiceEntityRepository
         parent::__construct($registry, Farmer::class);
     }
 
-    public function findFarmersInCity(string $city)
+    public function findFarmersInCity(string $slug)
     {
         $queryBuilder = $this->createQueryBuilder('farmer')
             ->join('farmer.city', 'city')
-            ->where('city.city LIKE :city')
-            ->setParameter('city', '%' . $city . '%')
-            ->setMaxResults(20)
+            ->where('city.slug LIKE :slug')
+            ->setParameter('slug', '%' . $slug . '%')
             ->getQuery();
 
         return $queryBuilder->getResult();
