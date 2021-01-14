@@ -74,7 +74,7 @@
         function initMap() {
             L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
                 attribution: 'données © <a href="//osm.org/copyright">OpenStreetMap</a>/ODbL - rendu <a href="//openstreetmap.fr">OSM France</a>',
-                minZoom: 1,
+                minZoom: 6,
                 maxZoom: 18
             }).addTo(map);
         }
@@ -103,6 +103,9 @@
                 //shadowAnchor: [32, 64],
                 popupAnchor: [0, -40]
             });
+            let userGeolocation = L.marker([position.coords.latitude, position.coords.longitude], {icon: userIcon})
+                .addTo(map);
+            userGeolocation.bindPopup("<p>Vous êtes ici</p>");
         }
 
         if(navigator.geolocation) {
