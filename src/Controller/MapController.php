@@ -8,6 +8,7 @@ namespace App\Controller;
 use App\Repository\CityRepository;
 use App\Entity\Comment;
 use App\Form\CommentType;
+use App\Repository\CommentRepository;
 use App\Repository\FarmerRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,11 +22,13 @@ class MapController extends AbstractController
      * @Route("/", name="map")
      * @param FarmerRepository $farmerRepository
      * @param Request $request
+     * @param CommentRepository $commentRepository
      * @return Response
      */
     public function index(FarmerRepository $farmerRepository,
                           CityRepository $cityRepository,
-                          Request $request): Response
+                          Request $request,
+                          CommentRepository $commentRepository): Response
     {
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
@@ -46,6 +49,7 @@ class MapController extends AbstractController
             'formComment' => $form->createView(),
             'farmers' => $farmerRepository->findBy([], [], 100),
             'cities' => $cityRepository->findBy([], [], 300),
+            'comments' => $commentRepository->findAll(),
         ]);
     }
 }

@@ -6,12 +6,13 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
           integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
           crossorigin=""/>
-
 {% endblock %}
 
 {% block body %}
-    <section>
-        <h1 class="text-center">La carte des agriculteurs du monde</h1>
+    <section class="container">
+        <h1 class="text-center my-5">La carte des agriculteurs du monde</h1>
+        <hr>
+        <h2 class="text-center my-5">Ecrivez votre commentaire :</h2>
 
     {% if app.user %}
     <div class="text-dark mb-5">
@@ -24,15 +25,29 @@
             {{ form_label(formComment.rate, 'Votre note :') }}
             {{ form_widget(formComment.rate) }}
         </div>
-        <button class="btn btn-primary my-3">
+        <button class="btn btn-primary mt-3">
         {{ 'Sauvegarder'|trans }}</button>
         {{ form_end(formComment) }}
     </div>
-
+    {% else %}
+        <a href="{{ path('app_login') }}" class="btn btn-primary">Se connecter</a>
     {% endif %}
-        {% for city in cities %}
-           {{ dump(city.farmers)}}
-        {% endfor %}
+        <hr>
+    <h2 class="text-center my-5"> Les commentaires :</h2>
+        <div class="row d-flex justify-content-center my-5">
+            {% for comment in comments %}
+                <div class="comment d-flex flex-column col-12 col-sm-5 col-lg-3 p-2 m-2">
+                    <p class="mb-0">De : <strong>{{ comment.author.firstname }} {{ comment.author.lastname }}</strong></p>
+                    <p class="mb-0">Note :
+                        {% for i in 1..comment.rate %}
+                                <img src="{{ asset('build/images/star.svg') }}" class="stars-rate" alt="">
+                        {% endfor %}
+                        </p>
+                    <p class="mb-0">Commentaire : {{ comment.commentText }}</p>
+                </div>
+            {% endfor %}
+        </div>
+
     <div id="position"></div>
 
         <div id="map" class="map"></div>
@@ -69,7 +84,17 @@
             infopos += "Longitude: "+position.coords.longitude+"\n";
             document.getElementById("position").innerHTML = infopos;
 
-            let roger = L.marker([position.coords.latitude, position.coords.longitude])
+            let userIcon = L.icon({
+                iconUrl: '{{ asset('build/images/marker/geolocation.png') }}',
+                //shadowUrl: '{{ asset('build/images/marker/geolocation.png') }}',
+                iconSize:     [41, 41],
+                //shadowSize:   [50, 64],
+                iconAnchor:   [20, 41],
+                //shadowAnchor: [32, 64],
+                popupAnchor:  [0, -40]
+            });
+
+            let roger = L.marker([position.coords.latitude, position.coords.longitude], {icon: userIcon})
                 .addTo(map);
             roger.bindPopup("<p>Vous êtes ici</p>");
         }
@@ -77,6 +102,16 @@
         if(navigator.geolocation)
             navigator.geolocation.getCurrentPosition(geolocation);
 
+        let farmerIcon = L.icon({
+            iconUrl: '{{ asset('build/images/marker/farmer.png') }}',
+            //shadowUrl: '{{ asset('build/images/marker/farmer.png') }}',
+            iconSize:     [41, 41],
+            //shadowSize:   [50, 64],
+            iconAnchor:   [20, 41],
+            //shadowAnchor: [32, 64],
+            popupAnchor:  [0, -40]
+        });
+        
         let coordinates = [];
         let categories = [];
         let category = '';
@@ -84,7 +119,7 @@
         categories = [];
         coordinates = [{{ farmer.city.latitude }}, {{ farmer.city.longitude }}];
         if (typeof city{{ farmer.city.zipcode }} == 'undefined') {
-            let city{{ farmer.city.zipcode }} = L.marker(coordinates)
+            let city{{ farmer.city.zipcode }} = L.marker(coordinates, {icon: farmerIcon})
                 .addTo(map);
 
             {% for city in cities %}

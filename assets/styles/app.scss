@@ -1,5 +1,7 @@
 @import 'variables.scss';
 @import "~bootstrap/scss/bootstrap";
+@import '~@fortawesome/fontawesome-free/scss/fontawesome.scss';
+
 
 * {
   box-sizing: border-box;
@@ -11,3 +13,14 @@
   width: 99vw;
   height: 100vh;
 }
+
+.stars-rate {
+  width: 25px;
+  height: 25px;
+}
+
+.comment {
+  border: 5px solid $primary;
+  border-radius: 5px;
+}
+
