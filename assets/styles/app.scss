@@ -33,7 +33,7 @@
   z-index: 1; /* Stay on top */
   top: 0;
   left: 0;
-  background-color: #111; /* Black*/
+  background-color: $primary; /* Black*/
   overflow-x: hidden; /* Disable horizontal scroll */
   padding-top: 60px; /* Place content 60px from the top */
   transition: 0.5s; /* 0.5 second transition effect to slide in the sidebar */
@@ -44,7 +44,7 @@
   padding: 8px 8px 8px 32px;
   text-decoration: none;
   font-size: 25px;
-  color: #818181;
+  color: white;
   display: block;
   transition: 0.3s;
 }
@@ -67,14 +67,14 @@
 .openbtn {
   font-size: 20px;
   cursor: pointer;
-  background-color: #111;
+  background-color: #5a9449;
   color: white;
   padding: 10px 15px;
   border: none;
 }
 
 .openbtn:hover {
-  background-color: #444;
+  background-color: #5a9449;
 }
 
 /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
@@ -88,6 +88,12 @@
   .sidebar {padding-top: 15px;}
   .sidebar a {font-size: 18px;}
 }
-
-
+.btn-form-city {
+  width : 95%;
+  height: 30px;
+  margin-top: 10px;
+}
+.img-form-city {
+  height: 20px;
+}
 

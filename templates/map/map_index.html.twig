@@ -7,15 +7,22 @@
           integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
           crossorigin=""/>
 {% endblock %}
-
+    {% block navbar %}
+        {% include 'include/_navbar.html.twig' %}
+    {% endblock %}
 {% block body %}
-    <section>
         <h1 class="text-center my-5">La carte des agriculteurs du monde</h1>
+
         <hr>
-        {{ form_start(formCity) }}
-        {{ form_widget(formCity) }}
-        <button>Search</button>
-        {{ form_end(formCity) }}
+    {{ form_start(formDepartment) }}
+    {{ form_widget(formDepartment) }}
+    <button>Search</button>
+    {{ form_end(formDepartment) }}
+
+        {{ form_start(formByProduct) }}
+        {{ form_widget(formByProduct) }}
+        <button>Rechercher</button>
+        {{ form_end(formByProduct) }}
 
         <div id="position"></div>
 
@@ -61,7 +68,6 @@
                 {% endfor %}
             </div>
         </div>
-    </section>
 {% endblock %}
 
 {% block javascripts %}

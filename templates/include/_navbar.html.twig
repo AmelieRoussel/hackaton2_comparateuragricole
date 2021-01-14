@@ -1,8 +1,97 @@
 <div id="mySidebar" class="sidebar">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-    <a href="#">Filter par catégorie</a>
-</div>
+    <div class="accordion" id="accordionExample">
+        <div class="card">
+            <div class="card-header" id="headingOne">
+                <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Filtrer par emplacement
+                    </button>
+                </h2>
+            </div>
 
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                <div class="card-body">
+                        {{ form_start(formCity) }}
+                        {{ form_widget(formCity) }}
+                        <button class="btn-form-city btn btn-primary p-0 align-items-center"><img class="img-form-city" src="{{ asset('build/images/loupe.svg') }}"></button>
+                        {{ form_end(formCity) }}
+                    </div>
+                    <p>Département</p>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="headingTwo">
+                <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        Filtrer par ressources
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                <div class="card-body">
+                    <div>
+                        <input type="checkbox" id="ble" name="ble"
+                               checked>
+                        <label for="ble">Blé</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="Avoine" name="Avoine">
+                        <label for="Avoine">Avoine</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="Pois" name="Pois"
+                               checked>
+                        <label for="Pois">Pois</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="Colza" name="Colza">
+                        <label for="Colza">Colza</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="triticale" name="triticale">
+                        <label for="triticale">Triticale</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="orge" name="orge">
+                        <label for="orge">Orge</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="mais" name="mais">
+                        <label for="mais">Maïs</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="tournesol" name="tournesol">
+                        <label for="tournesol">Tournesol</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="headingThree">
+                <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        Filtrer par prix
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                <div class="card-body">
+                    <div class="row">
+                        <input type="checkbox" id="scales" name="scales"
+                               checked>
+                        <label for="scales">Du plus cher au moins cher</label>
+                    </div>
+                    <div class="row">
+                        <input type="checkbox" id="horns" name="horns">
+                        <label for="horns">Du moins cher au plus cher</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <div id="main">
-    <button class="openbtn" onclick="openNav()">☰ Ouvrir la barre de navigation</button>
+    <button class="openbtn" onclick="openNav()">☰</button>
 </div>
