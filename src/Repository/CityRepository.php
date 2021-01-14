@@ -27,6 +27,17 @@ class CityRepository extends ServiceEntityRepository
         ->execute();
 }
 
+    public function findFarmersInCity(string $city)
+    {
+        $queryBuilder = $this->createQueryBuilder('city')
+            ->join('city.farmers', 'farmers')
+            ->where('city.city LIKE :city')
+            ->setParameter('city', '%' . $city . '%')
+            ->getQuery();
+
+        return $queryBuilder->getResult();
+    }
+
     // /**
     //  * @return City[] Returns an array of City objects
     //  */
