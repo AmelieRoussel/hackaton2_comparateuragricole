@@ -9,7 +9,6 @@
 {% endblock %}
 
 {% block body %}
-    <section>
         <h1 class="text-center my-5">La carte des agriculteurs du monde</h1>
         <hr>
         {{ form_start(formCity) }}
@@ -20,32 +19,26 @@
         <div id="position"></div>
 
         <div id="map" class="map"></div>
+        <section class="container">
 
-        <hr>
-
-        <h2 class="text-center my-5">Ecrivez votre commentaire :</h2>
-
-        {% if app.user %}
-        <div class="container">
-            <div class="text-dark mb-5">
-                {{ form_start(formComment) }}
-                <div class="my-3">
-                    {{ form_label(formComment.commentText, 'Votre commentaire :') }}
-                    {{ form_widget(formComment.commentText) }}
-                </div>
-                <div class="my-3">
-                    {{ form_label(formComment.rate, 'Votre note :') }}
-                    {{ form_widget(formComment.rate) }}
-                </div>
-                <button class="btn btn-primary mt-3">
-                    {{ 'Sauvegarder'|trans }}</button>
-                {{ form_end(formComment) }}
-            </div>
-            {% else %}
-                <a href="{{ path('app_login') }}" class="btn btn-primary">Se connecter</a>
-            {% endif %}
             <hr>
             <h2 class="text-center my-5"> Les commentaires :</h2>
+            {% if app.user %}
+                <div class="text-dark mb-5">
+                    {{ form_start(formComment) }}
+                    <div class="my-3">
+                        {{ form_label(formComment.commentText, 'Votre commentaire :') }}
+                        {{ form_widget(formComment.commentText) }}
+                    </div>
+                    <div class="my-3">
+                        {{ form_label(formComment.rate, 'Votre note :') }}
+                        {{ form_widget(formComment.rate) }}
+                    </div>
+                    <button class="btn btn-primary mt-3">
+                        {{ 'Sauvegarder'|trans }}</button>
+                    {{ form_end(formComment) }}
+                </div>
+            {% endif %}
             <div class="row d-flex justify-content-center my-5">
                 {% for comment in comments %}
                     <div class="comment d-flex flex-column col-12 col-sm-5 col-lg-3 p-2 m-2">
@@ -60,7 +53,7 @@
                     </div>
                 {% endfor %}
             </div>
-        </div>
+
     </section>
 {% endblock %}
 
