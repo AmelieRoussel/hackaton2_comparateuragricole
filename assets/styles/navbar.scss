@@ -2,12 +2,12 @@
 
 .sidebar {
   height: 100%;
-  width: 0;
+  width: 100%;
   position: fixed;
   z-index: 1;
   top: 0;
   left: 0;
-  background-color: rgb(90, 148, 73);
+  background-color: #5a9449;
   overflow-x: hidden;
   transition: 0.5s;
   padding-top: 60px;
@@ -17,13 +17,13 @@
   padding: 8px 8px 8px 32px;
   text-decoration: none;
   font-size: 25px;
-  color: #818181;
+  color: #5a9449;
   display: block;
   transition: 0.3s;
 }
 
 .sidebar a:hover {
-  color: #f1f1f1;
+  color: #5a9449;
 }
 
 .sidebar .closebtn {
@@ -44,7 +44,7 @@
 }
 
 .openbtn:hover {
-  background-color: #444;
+  background-color: #5a9449;
 }
 
 #main {
