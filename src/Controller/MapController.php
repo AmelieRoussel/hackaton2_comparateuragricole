@@ -8,6 +8,7 @@ namespace App\Controller;
 use App\Entity\City;
 use App\Form\FilterCitiesType;
 use App\Form\FilterCategoryType;
+use App\Form\FilterDepartmentsType;
 use App\Repository\CityRepository;
 use App\Entity\Comment;
 use App\Form\CommentType;
@@ -22,6 +23,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class MapController extends AbstractController
 {
+
+    public $listCities;
     /**
      * @Route("/", name="map")
      * @param FarmerRepository $farmerRepository
@@ -35,7 +38,7 @@ class MapController extends AbstractController
                           CityRepository $cityRepository,
                           Request $request,
                           CommentRepository $commentRepository,
-                            TransactionRepository $transactionRepository): Response
+                          TransactionRepository $transactionRepository): Response
     {
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
@@ -43,6 +46,9 @@ class MapController extends AbstractController
 
         $cityFilter = $this->createForm(FilterCitiesType::class);
         $cityFilter->handleRequest($request);
+
+        $departmentFilter = $this->createForm(FilterDepartmentsType::class);
+        $departmentFilter->handleRequest($request);
 
         $cityByProduct = $this->createForm(FilterCategoryType::class);
         $cityByProduct->handleRequest($request);
@@ -57,27 +63,32 @@ class MapController extends AbstractController
             $this->redirectToRoute('map');
         }
 
+        if($departmentFilter->isSubmitted() && $departmentFilter->isValid()){
+            $filter = $departmentFilter->getData()['Departement'];
+            if($filter) {
+                $farmers = $farmerRepository->findFarmersInDepartment($filter);
+            }
+        }
+
         if($cityFilter->isSubmitted() && $cityFilter->isValid()){
-            $filter = $cityFilter->getData()['city'];
-            $farmers = $farmerRepository->findFarmersInCity($filter);
-        } else {
-            $farmers = $farmerRepository->findBy([], [], 10);
+            $filter = $cityFilter->getData()['Ville'];
+            if($filter) {
+                $farmers = $farmerRepository->findFarmersInCity($filter);
+            }
         }
 
         if($cityByProduct->isSubmitted() && $cityByProduct->isValid()){
             $category = $cityByProduct->getData()['category'];
-            $farmersByProduct = $transactionRepository->findFarmersByProduct($category);
-        } else {
-            $farmersByProduct = $transactionRepository->findBy([], [], 10);
+//            $farmers = $farmerRepository->findFarmersByCategory($category);
         }
 
         return $this->render('map/map_index.html.twig', [
             'formComment' => $form->createView(),
             'formCity' => $cityFilter->createView(),
+            'formDepartment' => $departmentFilter->createView(),
             'cities3' => $cityRepository->findBy([], [], 3),
             'formByProduct' => $cityByProduct->createView(),
-            'farmersByProduct' => $farmersByProduct,
-            'farmers' => $farmers,
+            'farmers' => $farmers ?? $farmerRepository->findBy([], [], 10),
             'cities' => $cityRepository->findCitiesWithFarmers(),
             'comments' => $commentRepository->findAll(),
         ]);
