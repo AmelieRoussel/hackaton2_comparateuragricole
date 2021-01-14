@@ -12,9 +12,7 @@
 </head>
 
 <body>
-        {% block navbar %}
-            {% include 'include/_navbar.html.twig' %}
-        {% endblock %}
+        {% block navbar %}{% endblock %}
 
     <section class="container">
         {% for category, messages in app.flashes %}

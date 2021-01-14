@@ -2,39 +2,37 @@
 
 namespace App\Form;
 
-use App\Controller\MapController;
 use App\Repository\CityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class FilterCitiesType extends AbstractType
+class FilterDepartmentsType extends AbstractType
 {
-    public $ListCities;
+    public $listDepartments;
 
     public function __construct(CityRepository $cityRepository)
     {
-        $cities = $cityRepository->findCitiesWithFarmers();
+        $cities = $cityRepository->findDepartmentsWithFarmers();
         foreach ($cities as $city) {
-            $listCities[ucfirst(strtolower($city->getCity()))] = $city->getSlug();
+            $listDepartments[ucfirst(strtolower($city->getDepartment()))] = $city->getDepartment();
         }
-        $this->ListCities = $listCities;
+        $this->listDepartments = $listDepartments;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('Ville', ChoiceType::class, [
-                'choices' => $this->ListCities,
+            ->add('Departement', ChoiceType::class, [
+                'label' => 'Département',
+                'choices' => $this->listDepartments,
                 'multiple' => false,
                 'expanded' => false,
-                'required'   => false,
+                'required' => false,
                 'empty_data' => 'none',
-                'placeholder' => 'Toutes',
-            ])
-        ;
+                'placeholder' => 'Tous',
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -7,14 +7,11 @@
           integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
           crossorigin=""/>
 {% endblock %}
-
+    {% block navbar %}
+        {% include 'include/_navbar.html.twig' %}
+    {% endblock %}
 {% block body %}
         <h1 class="text-center my-5">La carte des agriculteurs du monde</h1>
-        <hr>
-        {{ form_start(formCity) }}
-        {{ form_widget(formCity) }}
-        <button>Search</button>
-        {{ form_end(formCity) }}
 
         <div id="position"></div>
 
@@ -53,8 +50,8 @@
                     </div>
                 {% endfor %}
             </div>
-
     </section>
+
 {% endblock %}
 
 {% block javascripts %}
@@ -202,7 +199,7 @@
             "Layer3": position3,
         }
 
-        L.control.layers(basemaps,overlays,{collapsed:false}).addTo(map);
+        L.control.layers(basemaps,overlays,{collapsed:true}).addTo(map);
 
         //position1.on("add",function(){
         //    position2.addTo(map);
