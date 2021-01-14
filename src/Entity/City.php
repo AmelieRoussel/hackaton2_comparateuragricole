@@ -54,6 +54,16 @@ class City
      */
     private $buyers;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $slug;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $department;
+
     public function __construct()
     {
         $this->farmers = new ArrayCollection();
@@ -181,6 +191,30 @@ class City
                 $buyer->setCity(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getDepartment(): ?int
+    {
+        return $this->department;
+    }
+
+    public function setDepartment(int $department): self
+    {
+        $this->department = $department;
 
         return $this;
     }

@@ -26,6 +26,7 @@ class MapController extends AbstractController
      * @return Response
      */
     public function index(FarmerRepository $farmerRepository,
+                          CityRepository $cityRepository,
                           Request $request,
                           CommentRepository $commentRepository): Response
     {
@@ -46,8 +47,9 @@ class MapController extends AbstractController
 
         return $this->render('map/map_index.html.twig', [
             'formComment' => $form->createView(),
+            'farmers' => $farmerRepository->findBy([], [], 100),
+            'cities' => $cityRepository->findBy([], [], 300),
             'comments' => $commentRepository->findAll(),
-            'farmers' => $farmerRepository->findBy([], [], 10)
         ]);
     }
 }

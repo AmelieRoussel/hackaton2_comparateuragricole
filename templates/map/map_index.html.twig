@@ -47,7 +47,6 @@
                 </div>
             {% endfor %}
         </div>
-    </section>
 
     <div id="position"></div>
 
@@ -103,8 +102,6 @@
         if(navigator.geolocation)
             navigator.geolocation.getCurrentPosition(geolocation);
 
-        let coordinates = [];
-
         let farmerIcon = L.icon({
             iconUrl: '{{ asset('build/images/marker/farmer.png') }}',
             //shadowUrl: '{{ asset('build/images/marker/farmer.png') }}',
@@ -114,15 +111,40 @@
             //shadowAnchor: [32, 64],
             popupAnchor:  [0, -40]
         });
-
+        
+        let coordinates = [];
+        let categories = [];
+        let category = '';
         {% for farmer in farmers %}
-            coordinates = [{{ farmer.city.latitude }}, {{ farmer.city.longitude }}];
-            if (typeof city{{ farmer.city.zipcode }} == 'undefined') {
-                let city{{ farmer.city.zipcode }} = L.marker(coordinates, {icon: farmerIcon})
-                    .addTo(map);
-                city{{ farmer.city.zipcode }}.bindPopup(
-                    "<p>Chez {{ farmer.firstname }} {{ farmer.lastname }} </p>");
-            }
+        categories = [];
+        coordinates = [{{ farmer.city.latitude }}, {{ farmer.city.longitude }}];
+        if (typeof city{{ farmer.city.zipcode }} == 'undefined') {
+            let city{{ farmer.city.zipcode }} = L.marker(coordinates, {icon: farmerIcon})
+                .addTo(map);
+
+            {% for city in cities %}
+                {% if city.zipcode == farmer.city.zipcode %}
+                    {#let city{{ city.zipcode }} = {{ city.farmers }};#}
+                    {#let city{{ city.zipcode }}sum = city{{ city.zipcode }}.length;#}
+                    {% for farmer in city.farmers %}
+                        {% for transaction in farmer.transactions %}
+                            if (typeof {{ transaction.product.category.name ~ city.zipcode }} == 'undefined') {
+                                let {{ transaction.product.category.name ~ city.zipcode}} = "{{ transaction.product.category.name }}";
+                                categories.push("{{ transaction.product.category.name }}");
+                            }
+                        {% endfor %}
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+
+            category = categories.join(', ');
+
+            city{{ farmer.city.zipcode }}.bindPopup(
+                {#"<p>Nombre d'agriculteurs : " +#}
+                {#    {% for city in cities %} city{{ city.zipcode }}sum {% endfor %} + "</p>" +#}
+                '<p> Catégories : ' + category + "</p>"
+            );
+        }
         {% endfor %}
     </script>
 {% endblock %}
