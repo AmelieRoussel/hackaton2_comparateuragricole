@@ -6,6 +6,7 @@ namespace App\Controller;
 
 
 use App\Entity\City;
+use App\Form\FilterCitiesType;
 use App\Repository\CityRepository;
 use App\Entity\Comment;
 use App\Form\CommentType;
@@ -36,6 +37,9 @@ class MapController extends AbstractController
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
 
+        $cityFilter = $this->createForm(FilterCitiesType::class);
+        $cityFilter->handleRequest($request);
+
         if($form->isSubmitted() && $form->isValid()){
             $entityManager = $this->getDoctrine()->getManager();
             $comment->setAuthor($this->getUser());
@@ -46,10 +50,18 @@ class MapController extends AbstractController
             $this->redirectToRoute('map');
         }
 
+        if($cityFilter->isSubmitted() && $cityFilter->isValid()){
+            $filter = $cityFilter->getData()['city'];
+            $farmers = $farmerRepository->findFarmersInCity($filter);
+        } else {
+            $farmers = $farmerRepository->findBy([], [], 10);
+        }
 
         return $this->render('map/map_index.html.twig', [
             'formComment' => $form->createView(),
-            'farmers' => $farmerRepository->findBy([], [], 100),
+            'formCity' => $cityFilter->createView(),
+            'cities3' => $cityRepository->findBy([], [], 3),
+            'farmers' => $farmers,
             'cities' => $cityRepository->findCitiesWithFarmers(),
             'comments' => $commentRepository->findAll(),
         ]);
