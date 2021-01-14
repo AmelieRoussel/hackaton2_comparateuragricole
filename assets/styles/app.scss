@@ -1,10 +1,27 @@
 @import 'variables.scss';
 @import "~bootstrap/scss/bootstrap";
+@import url('https://fonts.googleapis.com/css2?family=Karla:wght@300;400&display=swap');
 
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+p {
+  font-family: $default-font-family;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: $header-font-family;
+}
+
+body {
+  background-color: #d9d9d9;
 }
 
 .map {
@@ -80,6 +97,23 @@
 /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
 #main {
   transition: margin-left .5s; /* If you want a transition effect */
+}
+
+.form-login {
+  border : 5px outset $primary;
+  background: rgb(41,78,30);
+  background: linear-gradient(10deg, rgba(41,78,30,1) 0%, rgba(120,161,96,0.7791491596638656) 100%);
+}
+
+.form-signin {
+  border : 5px inset lighten($primary, 5%);
+  background: rgb(91,193,61);
+  background: linear-gradient(230deg, rgba(41,78,30,1) 0%, rgba(120,161,96,0.7791491596638656) 100%);
+}
+
+.form-title {
+  text-shadow: 2px 2px 2px rgba(127, 123, 121, 0),
+  2px 2px 2px #e8e8e8;
 }
 
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
