@@ -12,7 +12,13 @@
 
             <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
                 <div class="card-body">
-                    <p>Ville</p>
+                        {{ form_start(formCity) }}
+                        <div class="d-flex flex-column">
+                        {{ form_widget(formCity) }}
+                        <button class="btn btn-primary p-0 align-items-center"><img style="height: 20px" src="{{ asset('build/images/loupe.svg') }}"></button>
+                        {{ form_end(formCity) }}
+                        </div>
+                    </div>
                     <p>Département</p>
                 </div>
             </div>
@@ -28,9 +34,9 @@
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
                 <div class="card-body">
                     <div>
-                        <input type="checkbox" id="Ble" name="Ble"
+                        <input type="checkbox" id="ble" name="ble"
                                checked>
-                        <label for="Ble">Blé</label>
+                        <label for="ble">Blé</label>
                     </div>
                     <div>
                         <input type="checkbox" id="Avoine" name="Avoine">
@@ -44,6 +50,22 @@
                     <div>
                         <input type="checkbox" id="Colza" name="Colza">
                         <label for="Colza">Colza</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="triticale" name="triticale">
+                        <label for="triticale">Triticale</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="orge" name="orge">
+                        <label for="orge">Orge</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="mais" name="mais">
+                        <label for="mais">Maïs</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="tournesol" name="tournesol">
+                        <label for="tournesol">Tournesol</label>
                     </div>
                 </div>
             </div>
