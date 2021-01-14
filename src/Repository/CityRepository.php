@@ -59,6 +59,17 @@ class CityRepository extends ServiceEntityRepository
         return $queryBuilder->getResult();
     }
 
+    public function findCitiesInDeptartment($department)
+    {
+        $queryBuilder = $this->createQueryBuilder('city')
+            ->where('city.department = :department')
+            ->setParameter('department', $department)
+            ->orderBy('city.city', 'ASC')
+            ->getQuery();
+
+        return $queryBuilder->getResult();
+    }
+
     // /**
     //  * @return City[] Returns an array of City objects
     //  */

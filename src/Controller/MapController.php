@@ -15,6 +15,7 @@ use App\Form\CommentType;
 use App\Repository\CommentRepository;
 use App\Repository\FarmerRepository;
 use App\Repository\TransactionRepository;
+use App\Service\Slugify;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,14 +24,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class MapController extends AbstractController
 {
-
-    public $listCities;
     /**
      * @Route("/", name="map")
      * @param FarmerRepository $farmerRepository
      * @param CityRepository $cityRepository ,
      * @param Request $request
      * @param CommentRepository $commentRepository
+     * @param Slugify $slugify
      * @param TransactionRepository $transactionRepository
      * @return Response
      */
@@ -38,17 +38,18 @@ class MapController extends AbstractController
                           CityRepository $cityRepository,
                           Request $request,
                           CommentRepository $commentRepository,
+                          Slugify $slugify,
                           TransactionRepository $transactionRepository): Response
     {
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
 
-        $cityFilter = $this->createForm(FilterCitiesType::class);
-        $cityFilter->handleRequest($request);
-
         $departmentFilter = $this->createForm(FilterDepartmentsType::class);
         $departmentFilter->handleRequest($request);
+
+        $cityFilter = $this->createForm(FilterCitiesType::class);
+        $cityFilter->handleRequest($request);
 
         $cityByProduct = $this->createForm(FilterCategoryType::class);
         $cityByProduct->handleRequest($request);
@@ -67,13 +68,16 @@ class MapController extends AbstractController
             $filter = $departmentFilter->getData()['Departement'];
             if($filter) {
                 $farmers = $farmerRepository->findFarmersInDepartment($filter);
+                $cities = $cityRepository->findBy(['department' => $filter]);
             }
         }
 
         if($cityFilter->isSubmitted() && $cityFilter->isValid()){
             $filter = $cityFilter->getData()['Ville'];
+            $filter = $slugify->generate($filter);
             if($filter) {
                 $farmers = $farmerRepository->findFarmersInCity($filter);
+                $cities = $cityRepository->findOneBy(['slug' => $filter]);
             }
         }
 
@@ -89,7 +93,7 @@ class MapController extends AbstractController
             'cities3' => $cityRepository->findBy([], [], 3),
             'formByProduct' => $cityByProduct->createView(),
             'farmers' => $farmers ?? $farmerRepository->findBy([], [], 10),
-            'cities' => $cityRepository->findCitiesWithFarmers(),
+            'cities' => $cities ?? $cityRepository->findCitiesWithFarmers(),
             'comments' => $commentRepository->findAll(),
         ]);
     }
