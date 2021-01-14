@@ -103,10 +103,6 @@
                 //shadowAnchor: [32, 64],
                 popupAnchor: [0, -40]
             });
-
-            let userGeolocation = L.marker([position.coords.latitude, position.coords.longitude], {icon: userIcon})
-                .addTo(map);
-            userGeolocation.bindPopup("<p>Vous êtes ici</p>");
         }
 
         if(navigator.geolocation) {
