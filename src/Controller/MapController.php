@@ -49,7 +49,6 @@ class MapController extends AbstractController
 
         return $this->render('map/map_index.html.twig', [
             'formComment' => $form->createView(),
-            'cities3' => $cityRepository->findBy([], [], 3),
             'farmers' => $farmerRepository->findBy([], [], 100),
             'cities' => $cityRepository->findCitiesWithFarmers(),
             'comments' => $commentRepository->findAll(),

@@ -12,6 +12,10 @@
 </head>
 
 <body>
+        {% block navbar %}
+            {% include 'include/_navbar.html.twig' %}
+        {% endblock %}
+
     <section class="container">
         {% for category, messages in app.flashes %}
             {% for message in messages %}
@@ -25,6 +29,17 @@
     {% block body %}{% endblock %}
 
     {% block javascripts %}
+        <script>
+            function openNav() {
+                document.getElementById("mySidebar").style.width = "250px";
+                document.getElementById("main").style.marginLeft = "250px";
+            }
+
+            function closeNav() {
+                document.getElementById("mySidebar").style.width = "0";
+                document.getElementById("main").style.marginLeft= "0";
+            }
+        </script>
         {{ encore_entry_script_tags('app') }}
     {% endblock %}
 </body>
