@@ -13,11 +13,9 @@
             <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
                 <div class="card-body">
                         {{ form_start(formCity) }}
-                        <div class="d-flex flex-column">
                         {{ form_widget(formCity) }}
-                        <button class="btn btn-primary p-0 align-items-center"><img style="height: 20px" src="{{ asset('build/images/loupe.svg') }}"></button>
+                        <button class="btn-form-city btn btn-primary p-0 align-items-center"><img class="img-form-city" src="{{ asset('build/images/loupe.svg') }}"></button>
                         {{ form_end(formCity) }}
-                        </div>
                     </div>
                     <p>Département</p>
                 </div>
