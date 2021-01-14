@@ -19,15 +19,6 @@ class FarmerRepository extends ServiceEntityRepository
         parent::__construct($registry, Farmer::class);
     }
 
-    public function farmersPerCity()
-    {
-        return $this->createQueryBuilder('farmer')
-            ->select('COUNT(farmer.id), farmer.city, farmer.id')
-            ->groupBy('farmer.city')
-            ->getQuery()
-            ->execute();
-    }
-
     public function findFarmersInCity(string $city)
     {
         $queryBuilder = $this->createQueryBuilder('farmer')
@@ -39,6 +30,33 @@ class FarmerRepository extends ServiceEntityRepository
 
         return $queryBuilder->getResult();
     }
+
+    public function findFarmersInDepartment($department)
+    {
+        $queryBuilder = $this->createQueryBuilder('farmer')
+            ->join('farmer.city', 'city')
+            ->where('city.department = :department')
+            ->setParameter('department', $department)
+            ->setMaxResults(20)
+            ->getQuery();
+
+        return $queryBuilder->getResult();
+    }
+
+    public function findFarmersByCategory(string $category)
+    {
+        $queryBuilder = $this->createQueryBuilder('farmer')
+            ->join('farmer.transaction', 'transaction')
+            ->join('transaction.product', 'product')
+            ->join('product.category', 'category')
+            ->where('category.name LIKE :category')
+            ->setParameter('category', '%' . $category . '%')
+            ->setMaxResults(20)
+            ->getQuery();
+
+        return $queryBuilder->getResult();
+    }
+
 
 
     // /**

@@ -1,0 +1,50 @@
+<?php
+
+namespace App\Form;
+
+use App\Entity\Product;
+use App\Entity\Transaction;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
+class FilterCategoryType extends AbstractType
+{
+
+    private const CATEGORIES = [
+        'Feverol' => 'feverol',
+        'Tournesol' => 'tournesol',
+        'Blé' => 'ble',
+        'Avoine' => 'avoine',
+        'Triticale' => 'triticale',
+        'Orge' => 'orge',
+        'Maïs' => 'mais',
+        'Pois' => 'pois',
+        'Colza' => 'colza',
+    ];
+
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+//            ->add('createAt')
+//            ->add('price')
+//            ->add('quantity')
+            ->add('category', ChoiceType::class, [
+                'choices' => self::CATEGORIES,
+                'multiple' => false,
+                'expanded' => false,
+            ])
+//            ->add('farmer')
+//            ->add('buyer')
+        ;
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+//            'data_class' => Transaction::class,
+        ]);
+    }
+}
