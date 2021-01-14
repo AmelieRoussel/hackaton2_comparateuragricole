@@ -125,8 +125,16 @@
         let coordinates = [];
         let categories = [];
         let category = '';
+        let cityFarmers = [];
+        let farmerPerCity = 0;
+        let categoryList = '';
+        let cityName = '';
         {% for farmer in farmers %}
+        cityFarmers = [];
         categories = [];
+        categoryList = '';
+        farmerPerCity = 0;
+        cityName = '';
         coordinates = [{{ farmer.city.latitude }}, {{ farmer.city.longitude }}];
         if (typeof {{ farmer.city.slug }} == 'undefined') {
             let {{ farmer.city.slug }} = L.marker(coordinates, {icon: farmerIcon})
@@ -134,7 +142,9 @@
 
             {% for city in cities %}
                 {% if city.slug == farmer.city.slug %}
+            cityName = "{{ city.city|title }}";
                     {% for farmer in city.farmers %}
+                        farmerPerCity++
                         {% for transaction in farmer.transactions %}
                             if (categories.indexOf('{{ transaction.product.category.name }}') === -1)
                                 categories.push("{{ transaction.product.category.name }}");
@@ -145,10 +155,15 @@
 
             category = categories.join(', ');
 
+            if (category !== '') {
+                categoryList = "Céréales vendues : " + category;
+            }
+
             {{ farmer.city.slug }}.bindPopup(
-                    {# "<p>Nombre d'agriculteurs : " + #}
+                "<p class=\"text-center\">" + cityName + "</p>" +
+                     "<p>Nombre d'agriculteurs : " + farmerPerCity + "</p>" +
                     {# {% for city in cities %} city{{ city.zipcode }}sum {% endfor %} + "</p>" + #}
-                "<p> Céréales vendues : " + category + "</p>"
+                "<p>" + categoryList + "</p>"
             );
         }
         {% endfor %}
