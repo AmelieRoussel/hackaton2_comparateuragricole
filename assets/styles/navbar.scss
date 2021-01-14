@@ -10,7 +10,6 @@
   background-color: #5a9449;
   overflow-x: hidden;
   transition: 0.5s;
-  padding-top: 60px;
 }
 
 .sidebar a {
@@ -31,7 +30,7 @@
   top: 0;
   right: 25px;
   font-size: 36px;
-  margin-left: 50px;
+  margin-left: 20px;
 }
 
 .openbtn {
@@ -39,7 +38,6 @@
   cursor: pointer;
   background-color: #5a9449;
   color: white;
-  padding: 10px 15px;
   border: none;
 }
 
@@ -49,5 +47,4 @@
 
 #main {
   transition: margin-left .5s;
-  padding: 16px;
 }
