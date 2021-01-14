@@ -106,8 +106,11 @@
             roger.bindPopup("<p>Vous êtes ici</p>");
         }
 
-        if (navigator.geolocation)
+
+        if(navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(geolocation);
+            map.locate({setView: true, maxZoom: 16});
+        }
 
         let farmerIcon = L.icon({
             iconUrl: '{{ asset('build/images/marker/farmer.png') }}',
