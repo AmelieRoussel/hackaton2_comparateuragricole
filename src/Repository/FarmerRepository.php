@@ -28,6 +28,19 @@ class FarmerRepository extends ServiceEntityRepository
             ->execute();
     }
 
+    public function findFarmersInCity(string $city)
+    {
+        $queryBuilder = $this->createQueryBuilder('farmer')
+            ->join('farmer.city', 'city')
+            ->where('city.city LIKE :city')
+            ->setParameter('city', '%' . $city . '%')
+            ->setMaxResults(20)
+            ->getQuery();
+
+        return $queryBuilder->getResult();
+    }
+
+
     // /**
     //  * @return Farmer[] Returns an array of Farmer objects
     //  */
