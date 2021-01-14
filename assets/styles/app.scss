@@ -84,14 +84,15 @@ body {
 .openbtn {
   font-size: 20px;
   cursor: pointer;
-  background-color: #5a9449;
-  color: white;
+  background-color: white;
+  color: #5a9449;
   padding: 10px 15px;
   border: none;
 }
 
 .openbtn:hover {
   background-color: #5a9449;
+  color: white;
 }
 
 /* Style page content - use this if you want to push the page content to the right when you open the side navigation */

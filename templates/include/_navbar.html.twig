@@ -85,16 +85,16 @@
         </div>
     </div>
 </div>
-<div class="d-flex justify-content-between">
+<div class="navbar">
     <div id="main">
         <button class="openbtn" onclick="openNav()">☰</button>
     </div>
-    <div class="m-4">
+    <div class="m-2 navbar-brand d-flex justify-content-end">
         {% if app.user %}
             Bienvenue Mme/Mr {{ app.user.lastname }}, vous êtes connecté en tant que {{ app.user.email }}
-            <a href="{{ path('app_logout') }}" class="btn btn-primary"> Se déconnecter</a>
+            <a href="{{ path('app_logout') }}" class="btn btn-primary text-white"> Se déconnecter</a>
         {% else %}
-            <a href="{{ path('app_login') }}" class="btn btn-primary"> Se connecter</a>
+            <a href="{{ path('app_login') }}" class="btn btn-bnt-primary text-white "> Se connecter</a>
         {% endif %}
     </div>
 </div>
