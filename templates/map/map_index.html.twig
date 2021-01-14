@@ -13,17 +13,6 @@
 {% block body %}
         <h1 class="text-center my-5">La carte des agriculteurs du monde</h1>
 
-        <hr>
-    {{ form_start(formDepartment) }}
-    {{ form_widget(formDepartment) }}
-    <button>Search</button>
-    {{ form_end(formDepartment) }}
-
-        {{ form_start(formByProduct) }}
-        {{ form_widget(formByProduct) }}
-        <button>Rechercher</button>
-        {{ form_end(formByProduct) }}
-
         <div id="position"></div>
 
         <div id="map" class="map"></div>
