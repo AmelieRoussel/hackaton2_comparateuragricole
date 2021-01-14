@@ -12,7 +12,6 @@
     <section>
         <h1 class="text-center my-5">La carte des agriculteurs du monde</h1>
         <hr>
-
         <div id="position"></div>
 
         <div id="map" class="map"></div>
@@ -58,7 +57,19 @@
             </div>
         </div>
     </section>
-
+    <section>
+        <h2 class="my-4 mx-4">Découvrir les agriculteurs à proximité</h2>
+        <div class="row mx-0">
+            {% for city in cities %}
+                <div class="col-lg-1 col-sm-4">
+                    <img src="{{ asset('build/images/fields/field.jpg') }}" class="card-img" alt="image champ">
+                    <div class="card-img-overlay ">
+                        <h5 class="card-title text-center text-uppercase">{{ city.city }}</h5>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
 {% endblock %}
 
 {% block javascripts %}
@@ -105,7 +116,6 @@
                 .addTo(map);
             roger.bindPopup("<p>Vous êtes ici</p>");
         }
-
 
         if(navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(geolocation);
