@@ -12,7 +12,7 @@ class FilterCitiesType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('Ville', SearchType::class);
+            ->add('Ville', SearchType::class, ['label' => 'Ville  ']);
     }
 
     public function configureOptions(OptionsResolver $resolver)
