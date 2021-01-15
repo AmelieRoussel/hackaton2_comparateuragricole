@@ -77,18 +77,10 @@
         window.onload = function () {
             initMap();
         };
-
-        let marker = L.marker([47.878264, 1.9258559])
-            .addTo(map);
-        marker.bindPopup("<p>Chez Jean michel </p>")</script>
+    </script>
 
     <script>
         function geolocation(position) {
-            let infopos = "Position :\n";
-            infopos += "Latitude : " + position.coords.latitude + "\n";
-            infopos += "Longitude: " + position.coords.longitude + "\n";
-            document.getElementById("position").innerHTML = infopos;
-
             let userIcon = L.icon({
                 iconUrl: '{{ asset('build/images/marker/geolocation.png') }}',
                 //shadowUrl: '{{ asset('build/images/marker/geolocation.png') }}',
@@ -200,8 +192,7 @@ console.log(farmSize/farmerPerCity);
         });
 
         let position1 = L.marker([47.878264, 2.9258559]);
-        let position2 = L.marker([47.878264, 2.9558559]);
-        let position3 = L.marker([47.878264, 2.7258559]);
+
 
 
 
@@ -214,9 +205,8 @@ console.log(farmSize/farmerPerCity);
         };
 
         let overlays = {
-            "Layer1": position1,
-            "Layer2": position2,
-            "Layer3": position3,
+            // "Layer1": position1,
+
         }
 
         L.control.layers(basemaps,overlays,{collapsed:true}).addTo(map);
