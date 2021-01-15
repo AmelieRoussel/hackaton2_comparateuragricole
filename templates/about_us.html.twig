@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block navbar %}
+    {% include 'include/_navbar_secondary.html.twig' %}
+{% endblock %}
+
+{% block body %}
+<section class="container-fluid">
+    <div class="title-background mt-5">
+        <h1 class="w-100 my-3 text-center">A propos de nous</h1>
+        <div class="text-center w-100">
+            <img class="green-paint" src="{{ asset('build/images/vert3.png') }}" alt="">
+        </div>
+    </div>
+
+    <div class="title-background mt-5">
+        <h2 class="w-100 my-3 ml-3">Notre histoire</h2>
+        <div class="w-100">
+            <img class="grey-paint" src="{{ asset('build/images/gris.png') }}" alt="">
+        </div>
+    </div>
+    <p class="p-lg-5 p-2 mb-0">
+        A la suite de leurs candidatures dans une émission que tous les français et utilisateurs connaissent,
+        mettant en lien l'agriculture et l'amour, ces 4 agriculteurs ont bien trouvé l'amour. Après un épanouissement personnel
+        dans leurs vies privées et amoureuses respectives, car ils ont trouvé leur moitié, leur dulcinée, nos 4 agriculteurs
+        ont décidé d'aller encore plus loin et de rendre l'amour et l'opportunité qu'ils ont reçus.
+        <br><br>
+        Mettant en commun leurs ressources, leurs réseaux, leurs connaissances mais surtout leur amour pour l'agriculture
+        ils ont construit cette application au couleur de leur métier dans le but de créer des liens entre les
+        agriculteurs de la France entière avec des acheteurs potentiels.
+        <br><br>
+    </p>
+
+    <div class="title-background">
+        <h2 class="w-100 my-3 ml-3">Notre équipe</h2>
+        <div class="w-100">
+            <img class="grey-paint" src="{{ asset('build/images/gris.png') }}" alt="">
+        </div>
+    </div>
+    <div class="group-img container-fluid row group-wild-farmers d-flex justify-content-center justify-content-lg-around my-3 mx-0 p-0">
+        <img class="wild-farmers col-5 col-sm-3 col-lg-2 px-0 m-2" src="{{ asset('build/images/agri1.png') }}" alt="">
+        <img class="wild-farmers col-5 col-sm-3 col-lg-2 px-0 m-2" src="{{ asset('build/images/agri2.png') }}" alt="">
+        <img class="wild-farmers col-5 col-sm-3 col-lg-2 px-0 m-2" src="{{ asset('build/images/agri3.png') }}" alt="">
+        <img class="wild-farmers col-5 col-sm-3 col-lg-2 px-0 m-2" src="{{ asset('build/images/agri4.png') }}" alt="">
+    </div>
+
+</section>
+
+{% endblock %}

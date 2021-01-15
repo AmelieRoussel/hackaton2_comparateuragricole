@@ -27,6 +27,24 @@ body {
   background-color: #d9d9d9;
 }
 
+.leaflet-popup {
+  width: 220px;
+  .leaflet-popup-content-wrapper {
+    background-color: #5a9449;
+    color: #e8e8e8;
+    width: 80%;
+
+    .city-name {
+      font-size: 13px;
+    }
+  }
+  .leaflet-popup-tip-container {
+    .leaflet-popup-tip {
+      background-color: #5a9449;
+    }
+  }
+}
+
 .map {
   width: 99vw;
   height: 100vh;
@@ -45,16 +63,17 @@ body {
 
 .wild-farmers{
   border-radius: 10px;
-  border: 5px inset $dark;
-  box-shadow: 10px 5px 2px $dark-grey;
+  border: 5px inset $light;
+  box-shadow: 5px 5px 1px $dark-grey;
   transition: all 1s 0s ease;
-  filter: blur(5px);
+  //filter: opacity(20%);
+  filter : brightness(10%);
 }
 
 .wild-farmers:hover {
   transform: scale(1.05) rotate(360deg);
-  filter: blur(0px);
-
+  //filter: opacity(100%);
+  filter : brightness(100%);
 }
 
 
@@ -200,10 +219,46 @@ body {
   }
 }
 
+<<<<<<< HEAD
+=======
+.btn-form-city {
+   width : 95%;
+   height: 30px;
+   margin-top: 10px;
+ }
+.img-form-city {
+  height: 20px;
+}
+
+.title-background {
+  position: relative;
+  h1, h2 {
+    position: absolute;
+    text-shadow: 2px 2px 2px $light;
+  }
+  .green-paint {
+    width: 350px;
+    height: 75px;
+  }
+  .grey-paint {
+    width: 300px;
+    height: 75px;
+  }
+}
+
+.wilders,
+.pré {
+  text-shadow: 1px 5px 2px $dark;
+}
+
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+>>>>>>> 6d2f26ca4acc76bc641749124d92d6eb865380c6
 @media screen and (max-height: 450px) {
   .sidebar {padding-top: 20px;}
   .sidebar a {font-size: 18px;}
 }
+<<<<<<< HEAD
 
 .btn-form-city {
   width : 100%;
@@ -214,6 +269,8 @@ body {
 .img-form-city {
   height: 20px;
 }
+=======
+>>>>>>> 6d2f26ca4acc76bc641749124d92d6eb865380c6
 
 #filter_cities {
     label {

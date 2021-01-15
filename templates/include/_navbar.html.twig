@@ -1,5 +1,5 @@
 <nav class="navbar navbar-light navbar-hight d-flex justify-content-between" style="background-color: #5a9449;">
-    <a class="navbar-brand text-white" href="#">
+    <a class="navbar-brand text-white" href="{{ path('map') }}">
         <span>ComparateurAgricole.com</span>
     </a>
     {% if app.user %}
@@ -116,7 +116,12 @@
     </div>
 
     <div>
+<<<<<<< HEAD
         <h1>Les <strong class="text-danger">wilders</strong> sont dans le <strong class="text-success">pré </strong>!
+=======
+        <h1>Les <a href="{{ path('about_us') }}" class="text-danger font-weight-bold list-unstyled"> wilders</a>
+           sont dans le <strong class="text-success">pré </strong>!
+>>>>>>> 6d2f26ca4acc76bc641749124d92d6eb865380c6
         </h1>
     </div>
 
