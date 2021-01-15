@@ -14,6 +14,7 @@ h3,
 h4,
 h5,
 p,
+a,
 label,
 input,
 input > value,
@@ -41,7 +42,19 @@ body {
   border-radius: 5px;
 }
 
+.wild-farmers{
+  border-radius: 10px;
+  border: 5px inset $dark;
+  box-shadow: 10px 5px 2px $dark-grey;
+  transition: all 1s 0s ease;
+  filter: blur(5px);
+}
 
+.wild-farmers:hover {
+  transform: scale(1.05) rotate(360deg);
+  filter: blur(0px);
+
+}
 
 /* The sidebar menu */
 .sidebar {
