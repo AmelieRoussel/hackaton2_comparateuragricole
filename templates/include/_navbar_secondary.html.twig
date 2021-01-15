@@ -2,13 +2,13 @@
     <a class="navbar-brand text-white" href="{{ path('map') }}">
         <span>ComparateurAgricole.com</span>
     </a>
-    {% if app.user %}
-        <p class="text-light m-0">Bienvenue Mme/Mr <strong>{{ app.user.lastname }}</strong>, vous êtes connecté en tant que
-            <strong>{{ app.user.email }}</strong>
-        </p>
-    {% else %}
+{#    {% if app.user %}#}
+{#        <p class="text-light m-0">Bienvenue Mme/Mr <strong>{{ app.user.lastname }}</strong>, vous êtes connecté en tant que#}
+{#            <strong>{{ app.user.email }}</strong>#}
+{#        </p>#}
+{#    {% else %}#}
         <p class="text-light m-0">Bienvenue !</p>
-    {% endif %}
+{#    {% endif %}#}
 </nav>
 
 
@@ -18,11 +18,11 @@
         <a href="{{ path('app_register') }}" class="btn btn-outline-success text-white"> Créer son compte</a>
     </div>
 
-    <div>
-        <h1>Les <a href="{{ path('about_us') }}" class="wilders text-danger font-weight-bold text-decoration-none"> wilders</a>
-           sont dans le <strong class="pré text-success">pré </strong>!
-        </h1>
-    </div>
+{#    <div>#}
+{#        <h1>Les <a href="{{ path('about_us') }}" class="wilders text-danger font-weight-bold text-decoration-none"> wilders</a>#}
+{#           sont dans le <strong class="pré text-success">pré </strong>!#}
+{#        </h1>#}
+{#    </div>#}
 
     <div class="m-2">
         {% if app.user %}
