@@ -103,4 +103,13 @@ class MapController extends AbstractController
             'comments' => $commentRepository->findAll(),
         ]);
     }
+
+    /**
+     * @Route("/about-us", name="about_us")
+     * @return Response
+     */
+    public function aboutUs(): Response
+    {
+        return $this->render('about_us.html.twig');
+    }
 }
