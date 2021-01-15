@@ -77,18 +77,10 @@
         window.onload = function () {
             initMap();
         };
-
-        let marker = L.marker([47.878264, 1.9258559])
-            .addTo(map);
-        marker.bindPopup("<p>Chez Jean michel </p>")</script>
+    </script>
 
     <script>
         function geolocation(position) {
-            let infopos = "Position :\n";
-            infopos += "Latitude : " + position.coords.latitude + "\n";
-            infopos += "Longitude: " + position.coords.longitude + "\n";
-            document.getElementById("position").innerHTML = infopos;
-
             let userIcon = L.icon({
                 iconUrl: '{{ asset('build/images/marker/geolocation.png') }}',
                 //shadowUrl: '{{ asset('build/images/marker/geolocation.png') }}',
@@ -105,12 +97,22 @@
 
         if(navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(geolocation);
-            map.locate({setView: true, maxZoom: 16});
+            map.locate({setView: false, watch: true, maxZoom: 16});
         }
 
         let farmerIcon = L.icon({
             iconUrl: '{{ asset('build/images/marker/farmer.png') }}',
             //shadowUrl: '{{ asset('build/images/marker/farmer.png') }}',
+            iconSize: [41, 41],
+            //shadowSize:   [50, 64],
+            iconAnchor: [20, 41],
+            //shadowAnchor: [32, 64],
+            popupAnchor: [0, -40]
+        });
+
+        let barnIcon = L.icon({
+            iconUrl: '{{ asset('build/images/marker/barn.png') }}',
+            //shadowUrl: '{{ asset('build/images/marker/barn.png') }}',
             iconSize: [41, 41],
             //shadowSize:   [50, 64],
             iconAnchor: [20, 41],
@@ -125,22 +127,26 @@
         let farmerPerCity = 0;
         let categoryList = '';
         let cityName = '';
+        let farmSize = 0;
         {% for farmer in farmers %}
         cityFarmers = [];
         categories = [];
         categoryList = '';
         farmerPerCity = 0;
+        farmSize = 0;
         cityName = '';
         coordinates = [{{ farmer.city.latitude }}, {{ farmer.city.longitude }}];
         if (typeof {{ farmer.city.slug }} == 'undefined') {
             let {{ farmer.city.slug }} = L.marker(coordinates, {icon: farmerIcon})
                 .addTo(map);
+            map.setView([46.3630104, 2.9846608], 6);
 
             {% for city in cities %}
                 {% if city.slug == farmer.city.slug %}
             cityName = "{{ city.city|title }}";
                     {% for farmer in city.farmers %}
                         farmerPerCity++
+                        farmSize += {{ farmer.farmSize }};
                         {% for transaction in farmer.transactions %}
                             if (categories.indexOf('{{ transaction.product.category.name }}') === -1)
                                 categories.push("{{ transaction.product.category.name }}");
@@ -148,7 +154,7 @@
                     {% endfor %}
                 {% endif %}
             {% endfor %}
-
+console.log(farmSize/farmerPerCity);
             category = categories.join(', ');
 
             if (category !== '') {
@@ -158,10 +164,23 @@
             {{ farmer.city.slug }}.bindPopup(
                 "<p class=\"text-center\">" + cityName + "</p>" +
                      "<p>Nombre d'agriculteurs : " + farmerPerCity + "</p>" +
+                    "<p>Surface moyenne d\'exploitation : " + farmSize/farmerPerCity + " ha</p>" +
                     {# {% for city in cities %} city{{ city.zipcode }}sum {% endfor %} + "</p>" + #}
                 "<p>" + categoryList + "</p>"
             );
         }
+        {% endfor %}
+
+        {% for buyer in buyers %}
+        coordinates = [{{ buyer.city.latitude }}, {{ buyer.city.longitude }}];
+
+        let buyer{{ buyer.id }} = L.marker(coordinates, {icon: barnIcon})
+            .addTo(map);
+
+        buyer{{ buyer.id }}.bindPopup(
+            "<p class=\"text-center\">" + "{{ buyer.city.city }}" + "</p>" +
+            "<p>Type d\'acheteur : " + "{{ buyer.type }}" + "</p>"
+        );
         {% endfor %}
     </script>
     <script>
@@ -185,8 +204,7 @@
         });
 
         let position1 = L.marker([47.878264, 2.9258559]);
-        let position2 = L.marker([47.878264, 2.9558559]);
-        let position3 = L.marker([47.878264, 2.7258559]);
+
 
 
 
@@ -199,9 +217,8 @@
         };
 
         let overlays = {
-            "Layer1": position1,
-            "Layer2": position2,
-            "Layer3": position3,
+            // "Layer1": position1,
+
         }
 
         L.control.layers(basemaps,overlays,{collapsed:true}).addTo(map);
