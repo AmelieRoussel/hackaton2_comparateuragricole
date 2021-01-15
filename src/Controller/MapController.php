@@ -101,7 +101,7 @@ class MapController extends AbstractController
             'formDepartment' => $departmentFilter->createView(),
             'cities3' => $cityRepository->findBy([], [], 3),
             'formByProduct' => $cityByProduct->createView(),
-            'farmers' => $farmers ?? $farmerRepository->findBy([], [], 15),
+            'farmers' => $farmers ?? $farmerRepository->findFarmersWithData(),
             'cities' => $cities ?? $cityRepository->findCitiesWithFarmers(),
             'comments' => $commentRepository->findAll(),
             'buyers' => $buyerRepository->findAll(),
