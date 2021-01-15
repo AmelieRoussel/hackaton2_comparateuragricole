@@ -42,22 +42,6 @@ class FarmerRepository extends ServiceEntityRepository
         return $queryBuilder->getResult();
     }
 
-    public function findFarmersByCategory(string $category)
-    {
-        $queryBuilder = $this->createQueryBuilder('farmer')
-            ->join('farmer.transaction', 'transaction')
-            ->join('transaction.product', 'product')
-            ->join('product.category', 'category')
-            ->where('category.name LIKE :category')
-            ->setParameter('category', '%' . $category . '%')
-            ->setMaxResults(20)
-            ->getQuery();
-
-        return $queryBuilder->getResult();
-    }
-
-
-
     // /**
     //  * @return Farmer[] Returns an array of Farmer objects
     //  */

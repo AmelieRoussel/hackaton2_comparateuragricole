@@ -1,12 +1,19 @@
-
-<nav class="navbar navbar-light navbar-hight" style="background-color: #5a9449;">
+<nav class="navbar navbar-light navbar-hight d-flex justify-content-between" style="background-color: #5a9449;">
     <a class="navbar-brand text-white" href="#">
-        <img src="{{ asset('build/images/logo.jpeg') }}" width="40" height="40" class="d-inline-block align-top" alt="" loading="lazy">
-        ComparateurAgricole.com
+        <span>ComparateurAgricole.com</span>
     </a>
-    <span class="h2 d-flex justify-content-center">La Carte des Agriculteurs</span>
+    {% if app.user %}
+        <p class="text-light m-0">Bienvenue Mme/Mr <strong>{{ app.user.lastname }}</strong>, vous êtes connecté en tant que
+            <strong>{{ app.user.email }}</strong>
+        </p>
+    {% else %}
+        <p class="text-light m-0">Bienvenue !</p>
+    {% endif %}
 </nav>
-<nav class="navbar navbar-light navbar-down" style="background-color: #346F32;">
+
+
+<nav class="navbar navbar-light navbar-down d-flex justify-content-between" style="background-color: #346F32;">
+
     <div id="mySidebar" class="sidebar">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
         <div class="accordion" id="accordionExample">
@@ -84,18 +91,24 @@
             </div>
         </div>
     </div>
-</div>
-<div class="navbar">
-    <div id="main">
-        <button class="openbtn" onclick="openNav()">☰</button>
+
+    <div class="navbar">
+        <div id="main">
+            <button class="openbtn" onclick="openNav()">☰</button>
+        </div>
     </div>
-    <div class="m-2 navbar-brand d-flex justify-content-end">
+
+    <div>
+        <h1>Les <strong class="text-danger">wilders</strong> sont dans le <strong class="text-success">pré </strong>!</h1>
+    </div>
+
+    <div class="m-2">
         {% if app.user %}
-            Bienvenue Mme/Mr {{ app.user.lastname }}, vous êtes connecté en tant que {{ app.user.email }}
-            <a href="{{ path('app_logout') }}" class="btn btn-primary text-white"> Se déconnecter</a>
+            <a href="{{ path('app_logout') }}" class="btn btn-outline-success text-white"> Se déconnecter</a>
         {% else %}
-            <a href="{{ path('app_login') }}" class="btn btn-bnt-primary text-white "> Se connecter</a>
+            <a href="{{ path('app_login') }}" class="btn btn-outline-success text-white "> Se connecter</a>
         {% endif %}
     </div>
-</div>
+
+
 </nav>

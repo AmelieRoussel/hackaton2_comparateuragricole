@@ -12,8 +12,14 @@
     {% endblock %}
 {% block body %}
 
+    <div class="container-fluid row group-wild-farmers d-flex justify-content-center justify-content-lg-around my-3 mx-0 p-0">
+        <img class="wild-farmers col-5 col-sm-3 col-lg-2 px-0 m-2 m-lg-1" src="{{ asset('build/images/agri1.png') }}" alt="">
+        <img class="wild-farmers col-5 col-sm-3 col-lg-2 px-0 m-2" src="{{ asset('build/images/agri2.png') }}" alt="">
+        <img class="wild-farmers col-5 col-sm-3 col-lg-2 px-0 m-2" src="{{ asset('build/images/agri3.png') }}" alt="">
+        <img class="wild-farmers col-5 col-sm-3 col-lg-2 px-0 m-2" src="{{ asset('build/images/agri4.png') }}" alt="">
+    </div>
+    
         <div id="position"></div>
-
         <div id="map" class="map"></div>
         <section class="container">
 
@@ -71,18 +77,10 @@
         window.onload = function () {
             initMap();
         };
-
-        let marker = L.marker([47.878264, 1.9258559])
-            .addTo(map);
-        marker.bindPopup("<p>Chez Jean michel </p>")</script>
+    </script>
 
     <script>
         function geolocation(position) {
-            let infopos = "Position :\n";
-            infopos += "Latitude : " + position.coords.latitude + "\n";
-            infopos += "Longitude: " + position.coords.longitude + "\n";
-            document.getElementById("position").innerHTML = infopos;
-
             let userIcon = L.icon({
                 iconUrl: '{{ asset('build/images/marker/geolocation.png') }}',
                 //shadowUrl: '{{ asset('build/images/marker/geolocation.png') }}',
@@ -179,8 +177,7 @@
         });
 
         let position1 = L.marker([47.878264, 2.9258559]);
-        let position2 = L.marker([47.878264, 2.9558559]);
-        let position3 = L.marker([47.878264, 2.7258559]);
+
 
 
 
@@ -193,9 +190,8 @@
         };
 
         let overlays = {
-            "Layer1": position1,
-            "Layer2": position2,
-            "Layer3": position3,
+            // "Layer1": position1,
+
         }
 
         L.control.layers(basemaps,overlays,{collapsed:true}).addTo(map);

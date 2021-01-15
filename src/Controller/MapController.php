@@ -4,17 +4,19 @@
 namespace App\Controller;
 
 
-
+use App\DataFixtures\ProductFixtures;
 use App\Entity\City;
 use App\Entity\Farmer;
 use App\Form\FilterCitiesType;
 use App\Form\FilterCategoryType;
 use App\Form\FilterDepartmentsType;
+use App\Repository\CategoryRepository;
 use App\Repository\CityRepository;
 use App\Entity\Comment;
 use App\Form\CommentType;
 use App\Repository\CommentRepository;
 use App\Repository\FarmerRepository;
+use App\Repository\ProductRepository;
 use App\Repository\TransactionRepository;
 use App\Service\Slugify;
 use Doctrine\ORM\EntityManagerInterface;
@@ -40,6 +42,8 @@ class MapController extends AbstractController
                           Request $request,
                           CommentRepository $commentRepository,
                           Slugify $slugify,
+                          ProductRepository $productRepository,
+                          CategoryRepository $categoryRepository,
                           TransactionRepository $transactionRepository): Response
     {
         $comment = new Comment();
@@ -55,7 +59,7 @@ class MapController extends AbstractController
         $cityByProduct = $this->createForm(FilterCategoryType::class);
         $cityByProduct->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $comment->setAuthor($this->getUser());
             $entityManager->persist($comment);
@@ -65,26 +69,28 @@ class MapController extends AbstractController
             $this->redirectToRoute('map');
         }
 
-        if($departmentFilter->isSubmitted() && $departmentFilter->isValid()){
+        if ($departmentFilter->isSubmitted() && $departmentFilter->isValid()) {
             $filter = $departmentFilter->getData()['Departement'];
-            if($filter) {
+            if ($filter) {
                 $farmers = $farmerRepository->findFarmersInDepartment($filter);
                 $cities = $cityRepository->findBy(['department' => $filter]);
             }
         }
 
-        if($cityFilter->isSubmitted() && $cityFilter->isValid()){
+        if ($cityFilter->isSubmitted() && $cityFilter->isValid()) {
             $filter = $cityFilter->getData()['Ville'];
             $filter = $slugify->generate($filter);
-            if($filter) {
+            if ($filter) {
                 $farmers = $farmerRepository->findFarmersInCity($filter);
                 $cities = $cityRepository->findOneBy(['slug' => $filter]);
             }
         }
 
-        if($cityByProduct->isSubmitted() && $cityByProduct->isValid()){
+        if ($cityByProduct->isSubmitted() && $cityByProduct->isValid()) {
             $category = $cityByProduct->getData()['category'];
-//            $farmers = $farmerRepository->findFarmersByCategory($category);
+            if ($category) {
+                $farmers = $transactionRepository->findFarmersByProduct($category);
+            }
         }
 
         return $this->render('map/map_index.html.twig', [
