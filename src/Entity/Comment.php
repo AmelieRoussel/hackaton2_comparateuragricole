@@ -33,11 +33,6 @@ class Comment
      */
     private ?int $rate;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Farmer::class, inversedBy="comments")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private ?Farmer $farmer;
 
     public function getId(): ?int
     {
@@ -80,15 +75,4 @@ class Comment
         return $this;
     }
 
-    public function getFarmer(): ?Farmer
-    {
-        return $this->farmer;
-    }
-
-    public function setFarmer(?Farmer $farmer): self
-    {
-        $this->farmer = $farmer;
-
-        return $this;
-    }
 }

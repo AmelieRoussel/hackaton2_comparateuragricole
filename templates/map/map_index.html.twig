@@ -21,41 +21,6 @@
     
         <div id="position"></div>
         <div id="map" class="map"></div>
-        <section class="container">
-
-            <hr>
-            <h2 class="text-center my-5"> Les commentaires :</h2>
-            {% if app.user %}
-                <div class="text-dark mb-5">
-                    {{ form_start(formComment) }}
-                    <div class="my-3">
-                        {{ form_label(formComment.commentText, 'Votre commentaire :') }}
-                        {{ form_widget(formComment.commentText) }}
-                    </div>
-                    <div class="my-3">
-                        {{ form_label(formComment.rate, 'Votre note :') }}
-                        {{ form_widget(formComment.rate) }}
-                    </div>
-                    <button class="btn btn-primary mt-3">
-                        {{ 'Sauvegarder'|trans }}</button>
-                    {{ form_end(formComment) }}
-                </div>
-            {% endif %}
-            <div class="row d-flex justify-content-center my-5">
-                {% for comment in comments %}
-                    <div class="comment d-flex flex-column col-12 col-sm-5 col-lg-3 p-2 m-2">
-                        <p class="mb-0">De :
-                            <strong>{{ comment.author.firstname }} {{ comment.author.lastname }}</strong></p>
-                        <p class="mb-0">Note :
-                            {% for i in 1..comment.rate %}
-                                <img src="{{ asset('build/images/star.svg') }}" class="stars-rate" alt="">
-                            {% endfor %}
-                        </p>
-                        <p class="mb-0">Commentaire : {{ comment.commentText }}</p>
-                    </div>
-                {% endfor %}
-            </div>
-    </section>
 
 {% endblock %}
 
