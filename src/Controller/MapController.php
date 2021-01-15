@@ -6,9 +6,11 @@ namespace App\Controller;
 
 use App\DataFixtures\ProductFixtures;
 use App\Entity\City;
+use App\Entity\Farmer;
 use App\Form\FilterCitiesType;
 use App\Form\FilterCategoryType;
 use App\Form\FilterDepartmentsType;
+use App\Repository\BuyerRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\CityRepository;
 use App\Entity\Comment;
@@ -43,6 +45,7 @@ class MapController extends AbstractController
                           Slugify $slugify,
                           ProductRepository $productRepository,
                           CategoryRepository $categoryRepository,
+                          BuyerRepository $buyerRepository,
                           TransactionRepository $transactionRepository): Response
     {
         $comment = new Comment();
@@ -98,9 +101,37 @@ class MapController extends AbstractController
             'formDepartment' => $departmentFilter->createView(),
             'cities3' => $cityRepository->findBy([], [], 3),
             'formByProduct' => $cityByProduct->createView(),
-            'farmers' => $farmers ?? $farmerRepository->findBy([], [], 10),
+            'farmers' => $farmers ?? $farmerRepository->findBy([], [], 15),
             'cities' => $cities ?? $cityRepository->findCitiesWithFarmers(),
             'comments' => $commentRepository->findAll(),
+            'buyers' => $buyerRepository->findAll(),
+            'farmer' => $farmerRepository->findAll(),
+        ]);
+    }
+
+    /**
+     * @Route("/comment/{id}", name="comment")
+     * @param EntityManagerInterface $entityManager
+     * @param Request $request
+     * @param Farmer $farmer
+     * @return Response
+     */
+    public function writeComment(EntityManagerInterface $entityManager, Request $request, Farmer $farmer): Response
+    {
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+        if ($form->isValid() && $form->isSubmitted()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $comment->setAuthor($this->getUser());
+            $comment->setFarmer($farmer);
+            $entityManager->persist($comment);
+            $entityManager->flush();
+
+            $this->redirectToRoute('map');
+        }
+        $this->render('map/map_index.html.twig', [
+            'formComment' => $form->createView(),
         ]);
     }
 

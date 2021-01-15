@@ -29,8 +29,12 @@
 
                 <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
                     <div class="card-body">
-                        {{ form_start(formCity) }}
-                        {{ form_widget(formCity) }}
+                        <div class="input-group mb-3">
+                            <div class="input-group-append">
+                                {{ form_start(formCity) }}
+                                <span class="input-group-text text-primary " id="basic-addon2">{{ form_widget(formCity) }}</span>
+                            </div>
+                        </div>
                         <button class="btn-form-city btn btn-primary p-0 align-items-center">
                             <img class="img-form-city" src="{{ asset('build/images/loupe.svg') }}">
                         </button>
