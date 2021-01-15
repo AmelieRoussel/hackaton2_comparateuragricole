@@ -36,10 +36,21 @@ class FarmerRepository extends ServiceEntityRepository
             ->join('farmer.city', 'city')
             ->where('city.department = :department')
             ->setParameter('department', $department)
-            ->setMaxResults(20)
+            ->setMaxResults(50)
             ->getQuery();
 
         return $queryBuilder->getResult();
+    }
+
+    public function findFarmersWithData()
+    {
+        return $this->createQueryBuilder('farmer')
+            ->select('farmer')
+            ->join('App\Entity\City', 'city', 'WITH', 'city.id=farmer.city')
+            ->join('App\Entity\Transaction', 'transaction', 'WITH', 'farmer.id=transaction.farmer')
+            ->setMaxResults(50)
+            ->getQuery()
+            ->getResult();
     }
 
     // /**

@@ -30,12 +30,22 @@
         <script>
             function openNav() {
                 document.getElementById("mySidebar").style.width = "250px";
+<<<<<<< HEAD
                 document.getElementById("main").style.marginLeft = "1px";
+=======
+                document.getElementById("main").style.width = "1px";
+                document.getElementById("main").style.position = "fixed";
+                document.getElementById("main").style.zIndex = "10";
+                document.getElementById("mySidebar").style.zIndex = "15";
+
+
+>>>>>>> c129b63431664b3e5b90e2ce803bf47d8b4bed70
             }
 
             function closeNav() {
-                document.getElementById("mySidebar").style.width = "0";
+                document.getElementById("main").style.position = "fixed";
                 document.getElementById("main").style.marginLeft= "0";
+                document.getElementById("mySidebar").style.width = "0";
             }
         </script>
         {{ encore_entry_script_tags('app') }}

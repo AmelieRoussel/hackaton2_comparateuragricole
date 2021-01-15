@@ -12,50 +12,8 @@
     {% endblock %}
 {% block body %}
 
-    <div class="container-fluid row group-wild-farmers d-flex justify-content-center justify-content-lg-around my-3 mx-0 p-0">
-        <img class="wild-farmers col-5 col-sm-3 col-lg-2 px-0 m-2 m-lg-1" src="{{ asset('build/images/agri1.png') }}" alt="">
-        <img class="wild-farmers col-5 col-sm-3 col-lg-2 px-0 m-2" src="{{ asset('build/images/agri2.png') }}" alt="">
-        <img class="wild-farmers col-5 col-sm-3 col-lg-2 px-0 m-2" src="{{ asset('build/images/agri3.png') }}" alt="">
-        <img class="wild-farmers col-5 col-sm-3 col-lg-2 px-0 m-2" src="{{ asset('build/images/agri4.png') }}" alt="">
-    </div>
-    
         <div id="position"></div>
         <div id="map" class="map"></div>
-        <section class="container">
-
-            <hr>
-            <h2 class="text-center my-5"> Les commentaires :</h2>
-            {% if app.user %}
-                <div class="text-dark mb-5">
-                    {{ form_start(formComment) }}
-                    <div class="my-3">
-                        {{ form_label(formComment.commentText, 'Votre commentaire :') }}
-                        {{ form_widget(formComment.commentText) }}
-                    </div>
-                    <div class="my-3">
-                        {{ form_label(formComment.rate, 'Votre note :') }}
-                        {{ form_widget(formComment.rate) }}
-                    </div>
-                    <button class="btn btn-primary mt-3">
-                        {{ 'Sauvegarder'|trans }}</button>
-                    {{ form_end(formComment) }}
-                </div>
-            {% endif %}
-            <div class="row d-flex justify-content-center my-5">
-                {% for comment in comments %}
-                    <div class="comment d-flex flex-column col-12 col-sm-5 col-lg-3 p-2 m-2">
-                        <p class="mb-0">De :
-                            <strong>{{ comment.author.firstname }} {{ comment.author.lastname }}</strong></p>
-                        <p class="mb-0">Note :
-                            {% for i in 1..comment.rate %}
-                                <img src="{{ asset('build/images/star.svg') }}" class="stars-rate" alt="">
-                            {% endfor %}
-                        </p>
-                        <p class="mb-0">Commentaire : {{ comment.commentText }}</p>
-                    </div>
-                {% endfor %}
-            </div>
-    </section>
 
 {% endblock %}
 
@@ -148,24 +106,23 @@
                         farmerPerCity++
                         farmSize += {{ farmer.farmSize }};
                         {% for transaction in farmer.transactions %}
-                            if (categories.indexOf('{{ transaction.product.category.name }}') === -1)
-                                categories.push("{{ transaction.product.category.name }}");
+                            if (categories.indexOf('{{ transaction.product.category.name|title }}') === -1)
+                                categories.push("{{ transaction.product.category.name|title }}");
                         {% endfor %}
                     {% endfor %}
                 {% endif %}
             {% endfor %}
-console.log(farmSize/farmerPerCity);
+
             category = categories.join(', ');
 
             if (category !== '') {
-                categoryList = "Céréales vendues : " + category;
+                categoryList = "<img class=\"mr-1\" src=\"{{ asset('build/images/agronomy.png') }}\">" + category;
             }
 
             {{ farmer.city.slug }}.bindPopup(
-                "<p class=\"text-center\">" + cityName + "</p>" +
-                     "<p>Nombre d'agriculteurs : " + farmerPerCity + "</p>" +
-                    "<p>Surface moyenne d\'exploitation : " + farmSize/farmerPerCity + " ha</p>" +
-                    {# {% for city in cities %} city{{ city.zipcode }}sum {% endfor %} + "</p>" + #}
+                "<p class=\"city-name text-center\">" + cityName + "</p>" +
+                "<p><img class=\"text-light mr-1\" src=\"{{ asset('build/images/farmer.png') }}\"> " + farmerPerCity + "</p>" +
+                "<p><img class=\"mr-1\" src=\"{{ asset('build/images/farm.png') }}\"> " + farmSize/farmerPerCity + " ha</p>" +
                 "<p>" + categoryList + "</p>"
             );
         }
@@ -178,8 +135,8 @@ console.log(farmSize/farmerPerCity);
             .addTo(map);
 
         buyer{{ buyer.id }}.bindPopup(
-            "<p class=\"text-center\">" + "{{ buyer.city.city }}" + "</p>" +
-            "<p>Type d\'acheteur : " + "{{ buyer.type }}" + "</p>"
+            "<p class=\"city-name text-center\">" + "{{ buyer.city.city|title }}" + "</p>" +
+            "<p><img class=\"mr-1\" src=\"{{ asset('build/images/barn.png') }}\"> " + "{{ buyer.type }}" + "</p>"
         );
         {% endfor %}
     </script>

@@ -71,7 +71,7 @@ class MapController extends AbstractController
             $entityManager->flush();
             $this->addFlash('success', 'Your comment has been sent with success !');
 
-            $this->redirectToRoute('map');
+            return $this->redirectToRoute('map');
         }
 
         if ($departmentFilter->isSubmitted() && $departmentFilter->isValid()) {
@@ -104,7 +104,7 @@ class MapController extends AbstractController
             'formDepartment' => $departmentFilter->createView(),
             'cities3' => $cityRepository->findBy([], [], 3),
             'formByProduct' => $cityByProduct->createView(),
-            'farmers' => $farmers ?? $farmerRepository->findBy([], [], 10),
+            'farmers' => $farmers ?? $farmerRepository->findFarmersWithData(),
             'cities' => $cities ?? $cityRepository->findCitiesWithFarmers(),
             'comments' => $commentRepository->findAll(),
             'buyers' => $buyerRepository->findAll(),
@@ -136,5 +136,14 @@ class MapController extends AbstractController
         $this->render('map/map_index.html.twig', [
             'formComment' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/about-us", name="about_us")
+     * @return Response
+     */
+    public function aboutUs(): Response
+    {
+        return $this->render('about_us.html.twig');
     }
 }

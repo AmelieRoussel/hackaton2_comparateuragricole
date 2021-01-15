@@ -2,6 +2,10 @@
 
 {% block title %}Se connecter à son compte {% endblock %}
 
+{% block navbar %}
+    {% include 'include/_navbar_secondary.html.twig' %}
+{% endblock %}
+
 {% block body %}
     <section class="container mt-5">
         <div class="div-form">
@@ -40,8 +44,7 @@
             </form>
         </div>
     </section>
-    <div class="container-fluid mt-5 d-flex justify-content-between">
+    <div class="container-fluid mt-5">
         <a href="{{ path('map') }}" class="btn btn-danger">Retour à la carte</a>
-        <a href="{{ path('app_register') }}" class="btn btn-primary">Créer un compte</a>
     </div>
 {% endblock %}
