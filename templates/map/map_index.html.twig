@@ -110,6 +110,16 @@
             popupAnchor: [0, -40]
         });
 
+        let barnIcon = L.icon({
+            iconUrl: '{{ asset('build/images/marker/barn.png') }}',
+            //shadowUrl: '{{ asset('build/images/marker/barn.png') }}',
+            iconSize: [41, 41],
+            //shadowSize:   [50, 64],
+            iconAnchor: [20, 41],
+            //shadowAnchor: [32, 64],
+            popupAnchor: [0, -40]
+        });
+
         let coordinates = [];
         let categories = [];
         let category = '';
@@ -162,7 +172,8 @@ console.log(farmSize/farmerPerCity);
 
         {% for buyer in buyers %}
         coordinates = [{{ buyer.city.latitude }}, {{ buyer.city.longitude }}];
-        let buyer{{ buyer.id }} = L.marker(coordinates)
+
+        let buyer{{ buyer.id }} = L.marker(coordinates, {icon: barnIcon})
             .addTo(map);
 
         buyer{{ buyer.id }}.bindPopup(
