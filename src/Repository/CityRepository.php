@@ -37,39 +37,6 @@ class CityRepository extends ServiceEntityRepository
             ->execute();
     }
 
-    public function findFarmersInCity(string $slug)
-    {
-        $queryBuilder = $this->createQueryBuilder('city')
-            ->join('city.farmers', 'farmers')
-            ->where('city.slug = :slug')
-            ->setParameter('slug', $slug)
-            ->getQuery();
-
-        return $queryBuilder->getResult();
-    }
-
-    public function findFarmersInDepartment($department)
-    {
-        $queryBuilder = $this->createQueryBuilder('city')
-            ->join('city.farmers', 'farmers')
-            ->where('city.department = :department')
-            ->setParameter('department', $department)
-            ->getQuery();
-
-        return $queryBuilder->getResult();
-    }
-
-    public function findCitiesInDeptartment($department)
-    {
-        $queryBuilder = $this->createQueryBuilder('city')
-            ->where('city.department = :department')
-            ->setParameter('department', $department)
-            ->orderBy('city.city', 'ASC')
-            ->getQuery();
-
-        return $queryBuilder->getResult();
-    }
-
     // /**
     //  * @return City[] Returns an array of City objects
     //  */

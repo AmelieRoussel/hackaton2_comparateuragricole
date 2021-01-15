@@ -28,16 +28,15 @@ class FilterCategoryType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-//            ->add('createAt')
-//            ->add('price')
-//            ->add('quantity')
             ->add('category', ChoiceType::class, [
+                'label' => 'Catégorie',
                 'choices' => self::CATEGORIES,
                 'multiple' => false,
                 'expanded' => false,
+                'required'   => false,
+                'empty_data' => 'none',
+                'placeholder' => 'Toutes',
             ])
-//            ->add('farmer')
-//            ->add('buyer')
         ;
     }
 

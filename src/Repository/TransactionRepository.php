@@ -22,16 +22,18 @@ class TransactionRepository extends ServiceEntityRepository
     public function findFarmersByProduct(string $category)
     {
         $queryBuilder = $this->createQueryBuilder('transaction')
-            ->join('transaction.product', 'product')
-            ->join('product.category', 'category')
-            ->where('category.name LIKE :category')
-            ->setParameter('category', '%' . $category . '%')
-            ->setMaxResults(20)
+            ->select('farmer')
+            ->join('App\Entity\Farmer', 'farmer', 'WITH', 'farmer.id = transaction.farmer')
+            ->join('App\Entity\City', 'city', 'WITH', 'city.id = farmer.city')
+            ->join('App\Entity\Product', 'product', 'WITH', 'product.id = transaction.product')
+            ->join('App\Entity\Category', 'category', 'WITH', 'category.id = product.category')
+            ->where('category.name = :category')
+            ->setMaxResults(50)
+            ->setParameter('category', $category)
             ->getQuery();
 
         return $queryBuilder->getResult();
     }
-
     // /**
     //  * @return Transaction[] Returns an array of Transaction objects
     //  */
