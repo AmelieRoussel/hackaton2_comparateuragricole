@@ -64,6 +64,8 @@ class MapController extends AbstractController
         $cityByProduct = $this->createForm(FilterCategoryType::class);
         $cityByProduct->handleRequest($request);
 
+        $buyers = $buyerRepository->findAll();
+
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $comment->setAuthor($this->getUser());
@@ -79,6 +81,7 @@ class MapController extends AbstractController
             if ($filter) {
                 $farmers = $farmerRepository->findFarmersInDepartment($filter);
                 $cities = $cityRepository->findBy(['department' => $filter]);
+                $buyers = null;
             }
         }
 
@@ -88,6 +91,7 @@ class MapController extends AbstractController
             if ($filter) {
                 $farmers = $farmerRepository->findFarmersInCity($filter);
                 $cities = $cityRepository->findOneBy(['slug' => $filter]);
+                $buyers = null;
             }
         }
 
@@ -95,6 +99,7 @@ class MapController extends AbstractController
             $category = $cityByProduct->getData()['category'];
             if ($category) {
                 $farmers = $transactionRepository->findFarmersByProduct($category);
+                $buyers = null;
             }
         }
 
@@ -107,7 +112,7 @@ class MapController extends AbstractController
             'farmers' => $farmers ?? $farmerRepository->findFarmersWithData(),
             'cities' => $cities ?? $cityRepository->findCitiesWithFarmers(),
             'comments' => $commentRepository->findAll(),
-            'buyers' => $buyerRepository->findAll(),
+            'buyers' => $buyers,
             'farmer' => $farmerRepository->findAll(),
         ]);
     }
