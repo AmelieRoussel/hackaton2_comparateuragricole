@@ -97,7 +97,7 @@
 
         if(navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(geolocation);
-            map.locate({setView: true, maxZoom: 16});
+            map.locate({setView: false, watch: true, maxZoom: 16});
         }
 
         let farmerIcon = L.icon({
@@ -139,6 +139,7 @@
         if (typeof {{ farmer.city.slug }} == 'undefined') {
             let {{ farmer.city.slug }} = L.marker(coordinates, {icon: farmerIcon})
                 .addTo(map);
+            map.setView([46.3630104, 2.9846608], 6);
 
             {% for city in cities %}
                 {% if city.slug == farmer.city.slug %}
