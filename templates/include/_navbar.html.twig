@@ -34,19 +34,25 @@
                         <div class="input-group mb-3">
                             <div class="input-group-append">
                                 {{ form_start(formCity) }}
-                                <span class="input-group-text text-primary "
+                                <span class="input-group-text text-primary mt-3"
                                       id="basic-addon2">{{ form_widget(formCity) }}</span>
                             </div>
                         </div>
-                        <button class="btn-form-city btn btn-primary m-0 align-items-center">
+                        <button class="btn-form-city btn btn-primary mb-3">
                             <img class="img-form-city" src="{{ asset('build/images/loupe.svg') }}">
                         </button>
                         {{ form_end(formCity) }}
                     </div>
                     <div class="card-body">
-                        {{ form_start(formDepartment) }}
-                        {{ form_widget(formDepartment) }}
-                        <button class="btn-form-city btn btn-primary p-0 align-items-center">
+                        <div class="input-group mb-3 w-100">
+                            <div class="input-group-append">
+                                {{ form_start(formDepartment) }}
+                                <span class="input-group-text text-primary mt-3" id="basic-addon2">
+                                    {{ form_widget(formDepartment) }}
+                                </span>
+                            </div>
+                        </div>
+                        <button class="btn-form-city btn btn-primary p-0 my-3">
                             <img class="img-form-city" src="{{ asset('build/images/loupe.svg') }}">
                         </button>
                         {{ form_end(formDepartment) }}
@@ -65,9 +71,14 @@
             </div>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
                 <div class="card-body">
+                    <div class="input-group mb-3">
+                        <div class="input-group-append">
                     {{ form_start(formByProduct) }}
-                    {{ form_widget(formByProduct) }}
-                    <button class="btn-form-city btn btn-primary p-0 align-items-center my-3">
+                            <span class="input-group-text text-primary my-3" id="basic-addon2">
+                                {{ form_widget(formByProduct) }} </span>
+                        </div>
+                    </div>
+                    <button class="btn-form-city btn btn-primary p-0 align-items-center mb-3">
                         <img class="img-form-city" src="{{ asset('build/images/loupe.svg') }}">
                     </button>
                     {{ form_end(formByProduct) }}
