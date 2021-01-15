@@ -68,7 +68,7 @@ class MapController extends AbstractController
             $entityManager->flush();
             $this->addFlash('success', 'Your comment has been sent with success !');
 
-            $this->redirectToRoute('map');
+            return $this->redirectToRoute('map');
         }
 
         if ($departmentFilter->isSubmitted() && $departmentFilter->isValid()) {
