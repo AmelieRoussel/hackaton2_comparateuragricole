@@ -106,7 +106,7 @@
                         farmerPerCity++
                         farmSize += {{ farmer.farmSize }};
                         {% for transaction in farmer.transactions %}
-                            if (categories.indexOf('{{ transaction.product.category.name }}') === -1)
+                            if (categories.indexOf('{{ transaction.product.category.name|title }}') === -1)
                                 categories.push("{{ transaction.product.category.name|title }}");
                         {% endfor %}
                     {% endfor %}
