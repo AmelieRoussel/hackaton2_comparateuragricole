@@ -26,6 +26,24 @@ body {
   background-color: #d9d9d9;
 }
 
+.leaflet-popup {
+  width: 220px;
+  .leaflet-popup-content-wrapper {
+    background-color: #5a9449;
+    color: #e8e8e8;
+    width: 80%;
+
+    .city-name {
+      font-size: 13px;
+    }
+  }
+  .leaflet-popup-tip-container {
+    .leaflet-popup-tip {
+      background-color: #5a9449;
+    }
+  }
+}
+
 .map {
   width: 99vw;
   height: 100vh;

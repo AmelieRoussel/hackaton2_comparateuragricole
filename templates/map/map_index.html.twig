@@ -138,23 +138,22 @@
                         farmSize += {{ farmer.farmSize }};
                         {% for transaction in farmer.transactions %}
                             if (categories.indexOf('{{ transaction.product.category.name }}') === -1)
-                                categories.push("{{ transaction.product.category.name }}");
+                                categories.push("{{ transaction.product.category.name|title }}");
                         {% endfor %}
                     {% endfor %}
                 {% endif %}
             {% endfor %}
-console.log(farmSize/farmerPerCity);
+
             category = categories.join(', ');
 
             if (category !== '') {
-                categoryList = "Céréales vendues : " + category;
+                categoryList = "<img class=\"mr-1\" src=\"{{ asset('build/images/agronomy.png') }}\">" + category;
             }
 
             {{ farmer.city.slug }}.bindPopup(
-                "<p class=\"text-center\">" + cityName + "</p>" +
-                     "<p>Nombre d'agriculteurs : " + farmerPerCity + "</p>" +
-                    "<p>Surface moyenne d\'exploitation : " + farmSize/farmerPerCity + " ha</p>" +
-                    {# {% for city in cities %} city{{ city.zipcode }}sum {% endfor %} + "</p>" + #}
+                "<p class=\"city-name text-center\">" + cityName + "</p>" +
+                "<p><img class=\"text-light mr-1\" src=\"{{ asset('build/images/farmer.png') }}\"> " + farmerPerCity + "</p>" +
+                "<p><img class=\"mr-1\" src=\"{{ asset('build/images/farm.png') }}\"> " + farmSize/farmerPerCity + " ha</p>" +
                 "<p>" + categoryList + "</p>"
             );
         }
@@ -166,8 +165,8 @@ console.log(farmSize/farmerPerCity);
             .addTo(map);
 
         buyer{{ buyer.id }}.bindPopup(
-            "<p class=\"text-center\">" + "{{ buyer.city.city }}" + "</p>" +
-            "<p>Type d\'acheteur : " + "{{ buyer.type }}" + "</p>"
+            "<p class=\"city-name text-center\">" + "{{ buyer.city.city|title }}" + "</p>" +
+            "<p><img class=\"mr-1\" src=\"{{ asset('build/images/barn.png') }}\"> " + "{{ buyer.type }}" + "</p>"
         );
         {% endfor %}
     </script>
