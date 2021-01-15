@@ -48,7 +48,8 @@ class FarmerRepository extends ServiceEntityRepository
             ->select('farmer')
             ->join('App\Entity\City', 'city', 'WITH', 'city.id=farmer.city')
             ->join('App\Entity\Transaction', 'transaction', 'WITH', 'farmer.id=transaction.farmer')
-            ->setMaxResults(50)
+            ->orderBy('farmer.farmSize', 'DESC')
+            ->setMaxResults(200)
             ->getQuery()
             ->getResult();
     }
