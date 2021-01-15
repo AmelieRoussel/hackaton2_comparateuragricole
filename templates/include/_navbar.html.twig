@@ -3,7 +3,8 @@
         <span>ComparateurAgricole.com</span>
     </a>
     {% if app.user %}
-        <p class="text-light m-0">Bienvenue Mme/Mr <strong>{{ app.user.lastname }}</strong>, vous êtes connecté en tant que
+        <p class="text-light m-0">Bienvenue Mme/Mr <strong>{{ app.user.lastname }}</strong>, vous êtes connecté en tant
+            que
             <strong>{{ app.user.email }}</strong>
         </p>
     {% else %}
@@ -27,15 +28,17 @@
                     </h2>
                 </div>
 
-                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                     data-parent="#accordionExample">
                     <div class="card-body">
                         <div class="input-group mb-3">
                             <div class="input-group-append">
                                 {{ form_start(formCity) }}
-                                <span class="input-group-text text-primary " id="basic-addon2">{{ form_widget(formCity) }}</span>
+                                <span class="input-group-text text-primary "
+                                      id="basic-addon2">{{ form_widget(formCity) }}</span>
                             </div>
                         </div>
-                        <button class="btn-form-city btn btn-primary p-0 align-items-center">
+                        <button class="btn-form-city btn btn-primary m-0 align-items-center">
                             <img class="img-form-city" src="{{ asset('build/images/loupe.svg') }}">
                         </button>
                         {{ form_end(formCity) }}
@@ -71,27 +74,37 @@
                 </div>
             </div>
         </div>
-        <div class="card">
-            <div class="card-header" id="headingThree">
-                <h2 class="mb-0">
-                    <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
-                            data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                        Filtrer par prix
-                    </button>
-                </h2>
-            </div>
-            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-                <div class="card-body">
-                    <div class="row">
-                        <input type="checkbox" id="scales" name="scales"
-                               checked>
-                        <label for="scales">Du plus cher au moins cher</label>
+        <div class="my-4">
+            {% if app.user %}
+                <div class="text-dark mb-5">
+                    {{ form_start(formComment) }}
+                    <div class="my-3">
+                        {{ form_label(formComment.commentText, 'Votre commentaire :') }}
+                        {{ form_widget(formComment.commentText) }}
                     </div>
-                    <div class="row">
-                        <input type="checkbox" id="horns" name="horns">
-                        <label for="horns">Du moins cher au plus cher</label>
+                    <div class="my-3">
+                        {{ form_label(formComment.rate, 'Votre note :') }}
+                        {{ form_widget(formComment.rate) }}
                     </div>
+                    <button class="btn btn-primary mt-3">
+                        {{ 'Sauvegarder'|trans }}</button>
+                    {{ form_end(formComment) }}
                 </div>
+            {% endif %}
+
+            <div class="row d-flex justify-content-center my-5">
+                {% for comment in comments %}
+                    <div class="comment d-flex flex-column col-12 col-sm-5 col-lg-3 p-2 m-2">
+                        <p class="mb-0">De :
+                            <strong>{{ comment.author.firstname }} {{ comment.author.lastname }}</strong></p>
+                        <p class="mb-0">Note :
+                            {% for i in 1..comment.rate %}
+                                <img src="{{ asset('build/images/star.svg') }}" class="stars-rate" alt="">
+                            {% endfor %}
+                        </p>
+                        <p class="mb-0">Commentaires : {{ comment.commentText }}</p>
+                    </div>
+                {% endfor %}
             </div>
         </div>
     </div>
@@ -105,6 +118,7 @@
     <div>
         <h1>Les <a href="{{ path('about_us') }}" class="wilders text-danger font-weight-bold text-decoration-none"> wilders</a>
             sont dans le <strong class="pré text-success">pré </strong>!
+
         </h1>
     </div>
 
