@@ -14,15 +14,13 @@
 <body>
         {% block navbar %}{% endblock %}
 
-    <section class="container">
         {% for category, messages in app.flashes %}
             {% for message in messages %}
-                <div class="alert alert-{{ category }}">
+                <div class="alert alert-{{ category }} mb-0 text-center">
                     {{ message }}
                 </div>
             {% endfor %}
         {% endfor %}
-    </section>
 
     {% block body %}{% endblock %}
 
