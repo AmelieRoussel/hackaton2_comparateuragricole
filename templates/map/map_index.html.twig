@@ -167,6 +167,17 @@ console.log(farmSize/farmerPerCity);
             );
         }
         {% endfor %}
+
+        {% for buyer in buyers %}
+        coordinates = [{{ buyer.city.latitude }}, {{ buyer.city.longitude }}];
+        let buyer{{ buyer.id }} = L.marker(coordinates)
+            .addTo(map);
+
+        buyer{{ buyer.id }}.bindPopup(
+            "<p class=\"text-center\">" + "{{ buyer.city.city }}" + "</p>" +
+            "<p>Type d\'acheteur : " + "{{ buyer.type }}" + "</p>"
+        );
+        {% endfor %}
     </script>
     <script>
         const Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {

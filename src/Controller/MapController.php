@@ -9,6 +9,7 @@ use App\Entity\City;
 use App\Form\FilterCitiesType;
 use App\Form\FilterCategoryType;
 use App\Form\FilterDepartmentsType;
+use App\Repository\BuyerRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\CityRepository;
 use App\Entity\Comment;
@@ -43,6 +44,7 @@ class MapController extends AbstractController
                           Slugify $slugify,
                           ProductRepository $productRepository,
                           CategoryRepository $categoryRepository,
+                          BuyerRepository $buyerRepository,
                           TransactionRepository $transactionRepository): Response
     {
         $comment = new Comment();
@@ -101,6 +103,7 @@ class MapController extends AbstractController
             'farmers' => $farmers ?? $farmerRepository->findBy([], [], 10),
             'cities' => $cities ?? $cityRepository->findCitiesWithFarmers(),
             'comments' => $commentRepository->findAll(),
+            'buyers' => $buyerRepository->findAll(),
         ]);
     }
 }
