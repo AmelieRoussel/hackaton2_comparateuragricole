@@ -134,4 +134,13 @@ class MapController extends AbstractController
             'formComment' => $form->createView(),
         ]);
     }
+
+    /**
+     * @Route("/about-us", name="about_us")
+     * @return Response
+     */
+    public function aboutUs(): Response
+    {
+        return $this->render('about_us.html.twig');
+    }
 }
