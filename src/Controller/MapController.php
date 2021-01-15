@@ -69,7 +69,7 @@ class MapController extends AbstractController
             $comment->setAuthor($this->getUser());
             $entityManager->persist($comment);
             $entityManager->flush();
-            $this->addFlash('success', 'Your comment has been sent with success !');
+            $this->addFlash('primary', 'Votre commentaire a bien été enregistré !');
 
             return $this->redirectToRoute('map');
         }

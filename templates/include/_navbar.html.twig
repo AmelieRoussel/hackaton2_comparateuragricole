@@ -86,15 +86,15 @@
                         {{ form_label(formComment.rate, 'Votre note :') }}
                         {{ form_widget(formComment.rate) }}
                     </div>
-                    <button class="btn btn-primary mt-3">
+                    <button class="btn btn-success mt-3">
                         {{ 'Sauvegarder'|trans }}</button>
                     {{ form_end(formComment) }}
                 </div>
             {% endif %}
 
-            <div class="row d-flex justify-content-center my-5">
+            <div class="row d-flex justify-content-center">
                 {% for comment in comments %}
-                    <div class="comment d-flex flex-column col-12 col-sm-5 col-lg-3 p-2 m-2">
+                    <div class="comment d-flex flex-column m-2 bg-light ">
                         <p class="mb-0">De :
                             <strong>{{ comment.author.firstname }} {{ comment.author.lastname }}</strong></p>
                         <p class="mb-0">Note :
