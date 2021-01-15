@@ -117,11 +117,13 @@
         let farmerPerCity = 0;
         let categoryList = '';
         let cityName = '';
+        let farmSize = 0;
         {% for farmer in farmers %}
         cityFarmers = [];
         categories = [];
         categoryList = '';
         farmerPerCity = 0;
+        farmSize = 0;
         cityName = '';
         coordinates = [{{ farmer.city.latitude }}, {{ farmer.city.longitude }}];
         if (typeof {{ farmer.city.slug }} == 'undefined') {
@@ -133,6 +135,7 @@
             cityName = "{{ city.city|title }}";
                     {% for farmer in city.farmers %}
                         farmerPerCity++
+                        farmSize += {{ farmer.farmSize }};
                         {% for transaction in farmer.transactions %}
                             if (categories.indexOf('{{ transaction.product.category.name }}') === -1)
                                 categories.push("{{ transaction.product.category.name }}");
@@ -140,7 +143,7 @@
                     {% endfor %}
                 {% endif %}
             {% endfor %}
-
+console.log(farmSize/farmerPerCity);
             category = categories.join(', ');
 
             if (category !== '') {
@@ -150,6 +153,7 @@
             {{ farmer.city.slug }}.bindPopup(
                 "<p class=\"text-center\">" + cityName + "</p>" +
                      "<p>Nombre d'agriculteurs : " + farmerPerCity + "</p>" +
+                    "<p>Surface moyenne d\'exploitation : " + farmSize/farmerPerCity + " ha</p>" +
                     {# {% for city in cities %} city{{ city.zipcode }}sum {% endfor %} + "</p>" + #}
                 "<p>" + categoryList + "</p>"
             );
