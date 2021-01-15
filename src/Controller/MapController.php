@@ -35,6 +35,9 @@ class MapController extends AbstractController
      * @param Request $request
      * @param CommentRepository $commentRepository
      * @param Slugify $slugify
+     * @param ProductRepository $productRepository
+     * @param CategoryRepository $categoryRepository
+     * @param BuyerRepository $buyerRepository
      * @param TransactionRepository $transactionRepository
      * @return Response
      */
