@@ -3,6 +3,10 @@
 
 {% block title %}Créer son compte{% endblock %}
 
+{% block navbar %}
+    {% include 'include/_navbar_secondary.html.twig' %}
+{% endblock %}
+
 {% block body %}
     <section class="container mt-5">
     {% for flashError in app.flashes('verify_email_error') %}
